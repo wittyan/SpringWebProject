@@ -9,6 +9,9 @@
 <%@page import="java.util.HashMap"%>
 <%@page import="semicolon.com.bean.SemiProductBean"%>
 <%@page import="java.util.List"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jstl/core_rt"%>
+<%@ taglib prefix="functions"
+	uri="http://java.sun.com/jsp/jstl/functions"%>
 <%@ page language="java" contentType="text/html; charset=EUC-KR"
 	pageEncoding="EUC-KR"%>
 <!doctype html>
@@ -262,45 +265,31 @@ background-color
 
 
 	<!--::header part start::-->
-	<header class="main_menu">
+<header class="main_menu">
 		<div class="sub_menu">
 			<div class="container">
 				<div class="row">
-					<div class="col-lg-6 col-sm-12 col-md-6">
-						<!--  <div class="sub_menu_social_icon">
-                            <a href="#"><i class="flaticon-facebook"></i></a>
-                            <a href="#"><i class="flaticon-twitter"></i></a>
-                            <a href="#"><i class="flaticon-skype"></i></a>
-                            <a href="#"><i class="flaticon-instagram"></i></a>
-                            <span><i class="flaticon-phone-call"></i>+880 356 257 142</a></span> -->
-					</div>
+					<div class="col-lg-6 col-sm-12 col-md-6"></div>
 				</div>
 				<div class="col-lg-6 col-sm-12 col-md-6">
 					<div class="sub_menu_right_content">
 
-                            <%
-                            	if(id!=null){
-                            %>                              
-                            <span><%=id%>님 안녕하세요</span>                          
-                            <a href="logout.do">로그아웃</a>
-                            <a href="myInfo.do?id=<%=id%>">마이 페이지</a>
-                            <%
-                            	if(id.equals("admin")){
-                            %>
-                            <a href="admincontrolMain.do">관리자페이지</a>
-                            <%
-                            	}
-                            %>
-                             <%
-                             	}else{
-                             %>
-                             <span>OO님 안녕하세요</span>
-                            <a href="loginMain.do">로그인</a>
-                            <a href="#">마이 페이지</a>
-                            <a href="#"></a>
-                            <%
-                            	}
-                            %>
+						
+						<c:choose>
+						<c:when test="${id ne null}">
+						<span>${id }님 안녕하세요</span> <a href="loginMain.jsp">로그아웃</a> <a
+							href="myInfo.do?id=${id }">마이 페이지</a>
+						<c:if test="${id eq 'admin'}">
+						<a href="admincontrolMain.do">관리자페이지</a>
+						</c:if>
+						</c:when>
+						<c:otherwise>
+						
+						<span>비회원</span> <a href="loginMain.jsp">로그인</a> <a href="#">마이
+							페이지</a> <a href="mypage.do"></a>
+						
+						</c:otherwise>
+						</c:choose>
 					</div>
 				</div>
 
