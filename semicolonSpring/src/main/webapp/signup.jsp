@@ -19,73 +19,59 @@
 </head>
 <body>
 <!--::header part start::-->
-  <header class="main_menu">
-		<div class="sub_menu">
-			<div class="container">
-				<div class="row">
-					<div class="col-lg-6 col-sm-12 col-md-6"></div>
-				</div>
-				<div class="col-lg-6 col-sm-12 col-md-6">
-					<div class="sub_menu_right_content">
+   <header class="main_menu">
+        <div class="sub_menu">
+            <div class="container">
+                <div class="row">
+                  <div class="col-lg-6 col-sm-12 col-md-6">
+                        </div>
+                    </div>
+                    <div class="col-lg-6 col-sm-12 col-md-6">
+                        <div class="sub_menu_right_content">
+                          
+                            <a href="#">로그인</a>
+                            <a href="#">마이 페이지</a>
+                            <a href="#"></a>
+                        </div>
+                    </div>
+                  
+                </div>
+            </div>
+        
+        <div class="main_menu_iner">
+            <div class="container">
+                <div class="row align-items-center ">
+                    <div class="col-lg-12">
+                        <nav class="navbar navbar-expand-lg navbar-light justify-content-between">
+                            <a class="navbar-brand" href="index.do"> <img src="/team/img/semi_logo.png" alt="logo" width="200" height="80"> </a>
+                            <button class="navbar-toggler" type="button" data-toggle="collapse"
+                                data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+                                aria-expanded="false" aria-label="Toggle navigation">
+                                <span class="navbar-toggler-icon"></span>
+                            </button>
 
-						
-						<c:choose>
-						<c:when test="${id ne null}">
-						<span>${id }님 안녕하세요</span> <a href="loginMain.jsp">로그아웃</a> <a
-							href="myInfo.do?id=${id }">마이 페이지</a>
-						<c:if test="${id eq 'admin'}">
-						<a href="admincontrolMain.do">관리자페이지</a>
-						</c:if>
-						</c:when>
-						<c:otherwise>
-						
-						<span>비회원</span> <a href="loginMain.jsp">로그인</a> <a href="#">마이
-							페이지</a> <a href="mypage.do"></a>
-						
-						</c:otherwise>
-						</c:choose>
-					</div>
-				</div>
-
-			</div>
-		</div>
-
-		<div class="main_menu_iner">
-			<div class="container">
-				<div class="row align-items-center ">
-					<div class="col-lg-12">
-						<nav
-							class="navbar navbar-expand-lg navbar-light justify-content-between">
-							<a class="navbar-brand" href="/team/index.do"> <img
-								src="/team/img/semi_logo.png" alt="logo" width="200" height="80">
-							</a>
-							<button class="navbar-toggler" type="button"
-								data-toggle="collapse" data-target="#navbarSupportedContent"
-								aria-controls="navbarSupportedContent" aria-expanded="false"
-								aria-label="Toggle navigation">
-								<span class="navbar-toggler-icon"></span>
-							</button>
-
-							<div
-								class="collapse navbar-collapse main-menu-item justify-content-center"
-								id="navbarSupportedContent">
-								<ul class="navbar-nav">
-									<li class="nav-item"><a class="nav-link"
-										href="/team/index.do?id=${id }">Home</a></li>
-									<li class="nav-item"><a class="nav-link"
-										href="/team/list.do?page=1&id=${id }">상품목록</a></li>
-									<li class="nav-item"><a class="nav-link"
-										href="/team/communityList.do?id=${id }">커뮤니티</a></li>
-
-								</ul>
-							</div>
-							<a href="#" class="btn_1 d-none d-lg-block">book now</a>
-						</nav>
-					</div>
-				</div>
-			</div>
-		</div>
-	</header>
+                            <div class="collapse navbar-collapse main-menu-item justify-content-center"
+                                id="navbarSupportedContent">
+                                <ul class="navbar-nav">
+                                    <li class="nav-item">
+                                        <a class="nav-link" href="#">Home</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link" href="#">상품목록</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link" href="#">커뮤니티</a>
+                                    </li>
+                                  
+                                </ul>
+                            </div>
+                            <a href="#" class="btn_1 d-none d-lg-block">book now</a>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
     <!-- Header part end-->
 <article class="">
 		<div class="">

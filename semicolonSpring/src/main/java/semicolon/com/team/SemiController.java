@@ -63,7 +63,7 @@ public class SemiController {
 	@Resource
 	MyPageDao myPageDao;
 	
-	String locations = "C:\\semispring\\semicolonSpring\\src\\main\\webapp\\semiupload\\";
+	String locations = "C:\\Users\\premi\\git\\repository\\semicolonSpring\\src\\main\\webapp\\semiupload\\";
 //	ActionFactory부분을 Spring으로 구현
 
 	@RequestMapping(value = { "sProAction.do", "selectProFun.do", "comName.do", "selemblt.do", "selemblt2.do",
@@ -869,6 +869,14 @@ public class SemiController {
 			
 		return "redirect:/info.do?pno="+pno+"&id="+id;
 	}
+	@RequestMapping(value = "signup.do")
+	public String signupFunc(HttpServletRequest request, HttpServletResponse response, Model model) {
+		
+		model.addAttribute("taehoonDao", tdao);
+		
+		return "signup";
+	}
+	
 	@RequestMapping(value = "signupProcess.do")
 	public String signupProcessFunc(HttpServletRequest request, HttpServletResponse response, Model model) {
 		
