@@ -152,7 +152,7 @@ AppleDao appleDao = (AppleDao) request.getAttribute("appleDao");
   <a href="#" class="list-group-item list-group-item-action">예약내역</a>
 </div> -->
 
-<nav class="navbar navbar-expand-sm bg-light navbar-light" id="navbar">
+<nav class="navbar navbar-expand-sm bg-light navbar-light" id="navbar" style="margin-left:10%">
   <ul class="navbar-nav">
     <li class="nav-item active">
       <a class="nav-link" href="myInfo.do">회원정보변경</a>

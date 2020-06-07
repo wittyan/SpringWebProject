@@ -130,9 +130,9 @@ MyPageDao myPageDao = (MyPageDao) request.getAttribute("myPageDao");
 			</div>
 	</section> -->
 
-<nav class="navbar navbar-expand-sm bg-light navbar-light" id="navbar">
-  <ul class="navbar-nav">
-    <li class="nav-item active">
+<nav class="navbar navbar-expand-sm bg-light navbar-light" id="navbar" style="float:center;">
+  <ul class="navbar-nav" style="margin-left:10%">
+    <li class="nav-item active" >
       <a class="nav-link" href="#">회원정보변경</a>
     </li>
     <li class="nav-item">
@@ -141,7 +141,7 @@ MyPageDao myPageDao = (MyPageDao) request.getAttribute("myPageDao");
   </ul>
 </nav>
 
-	<section id="myInfoSection">
+	<section id="myInfoSection" style="margin-left:40%">
 			<div class="container">
 				<h2>내 회원정보</h2>
 			</div>
@@ -149,9 +149,9 @@ MyPageDao myPageDao = (MyPageDao) request.getAttribute("myPageDao");
 
 	<form id="myInfo" action="myInfoProcess.do?id=<%=id %>" method="post">
 
-		<div class="col-sm-6 col-md-offset-3">
+		<div class="col-sm-6 col-md-offset-3" style="margin-left:20%">
 				
-				<div class="form-group">
+				<div class="form-group" >
 					<h4>ID: <%= id %></h4>
 				<div class="form-group">
 					<label for="inputname">이름</label> <input type="text"
