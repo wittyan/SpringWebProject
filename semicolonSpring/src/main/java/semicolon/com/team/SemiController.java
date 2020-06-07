@@ -767,6 +767,11 @@ public class SemiController {
 		model.addAttribute("addressDao", addressDao);
 		model.addAttribute("myPageDao", myPageDao);
 		
+		model.addAttribute("date", request.getParameter("date"));
+		model.addAttribute("count", request.getParameter("count"));
+		model.addAttribute("pno", request.getParameter("pno"));
+		model.addAttribute("id", request.getParameter("id"));
+		
 		return "inforeserveProcess";
 	}
 	@RequestMapping(value = "myReservation.do")
@@ -884,4 +889,29 @@ public class SemiController {
 		return "memberList";
 	}
 	
+	@RequestMapping(value="inforeserveCheck.do")
+	public String inforeserveCheckFunc(HttpServletRequest request,Model model) {
+		
+//		String date = request.getParameter("date");
+//		String count = request.getParameter("count");
+	
+		int pno = Integer.parseInt(request.getParameter("pno"));
+		
+		String id = (String)request.getSession().getAttribute("id");
+
+		int cno = Adao.getCnoFromPno(pno);
+		
+		
+		
+		model.addAttribute("spb",Adao.anSelectProductFromPno(pno));
+		model.addAttribute("company",Adao.anSelectCompany(cno));
+		model.addAttribute("member", Adao.anSelectMemberInfo(id));
+		model.addAttribute("date", request.getParameter("date"));
+		model.addAttribute("count", request.getParameter("count"));
+		model.addAttribute("pno", request.getParameter("pno"));
+		model.addAttribute("id", request.getParameter("id"));
+		
+		return "inforeserveCheck";
+	}
+
 }

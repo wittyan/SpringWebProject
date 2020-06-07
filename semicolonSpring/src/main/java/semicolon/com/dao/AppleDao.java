@@ -27,10 +27,25 @@ public class AppleDao extends SqlSessionDaoSupport {
 		this.setSqlSessionTemplate(st);
 	}
 
+	public SemiProductBean anSelectProductFromPno(Integer pno) {
+		
+		return this.getSqlSession().selectOne("anSelectProductFromPno", pno);
+		
+	}
+	public SemiMemberBean anSelectMemberInfo(String str) {
+		
+		return this.getSqlSession().selectOne("anSelectMemberInfo", str);
+
+	}
+	public SemiCompanyBean anSelectCompany(Integer pno) {
+		
+		return this.getSqlSession().selectOne("anSelectCompany", pno);
+		
+	}
 	public List<SemiProductBean> selectPreferProductFromAge(String str) {
-
+		
 		return this.getSqlSession().selectList("selectPreferProductFromAge", str);
-
+		
 	}
 
 	public String selectAgeGroup(String id) {

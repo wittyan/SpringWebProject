@@ -28,10 +28,10 @@ AppleDao appleDao = (AppleDao) request.getAttribute("appleDao");
 		id="DOE";
 	}
 	
-	out.println("date:"+date+" count:"+count+" pno:"+pno);
+	System.out.println("date:"+date+" count:"+count+" pno:"+pno);
 	
 	
-	if(date!=null||count!=null||pno!=null||id!=null){
+	if(date!=null&&count!=null&&pno!=null&&id!=null){
 	SemiReserveBean srb = new SemiReserveBean();
 	int cno = appleDao.getCnoFromPno(Integer.parseInt(pno));
 	
@@ -43,7 +43,7 @@ AppleDao appleDao = (AppleDao) request.getAttribute("appleDao");
 	
 	sungsuDao.anInsertsemireserve(srb);
 	}
-	response.sendRedirect("/team/myReservation.do?id="+id+"&pno="+pno+"");
+	response.sendRedirect("/team/myReservation.do?id="+id+"&pno="+pno);
 %>
 <script type="text/javascript">
 alert('예약완료');

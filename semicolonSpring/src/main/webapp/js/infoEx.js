@@ -29,7 +29,9 @@ $(function(){
 			 }else{
 				 var str = "예약날짜: "+fulldate+", 예약인원 :"+count;
 				 if(confirm(str+" \n예약하시겠습니까?")){
-					 location.href= "inforeserveProcess.do?date="+fulldate+"&count="+count+"&pno="+$("input[id=pno]").val();
+					 
+					 location.href= "inforeserveCheck.do?date="+fulldate+"&count="+count+"&pno="+$("input[id=pno]").val();
+//					 location.href= "inforeserveProcess.do?date="+fulldate+"&count="+count+"&pno="+$("input[id=pno]").val();
 				 }
 			 }
 		 });
