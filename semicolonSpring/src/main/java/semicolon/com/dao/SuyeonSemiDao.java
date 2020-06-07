@@ -29,8 +29,8 @@ public class SuyeonSemiDao extends SqlSessionDaoSupport{
 		this.getSqlSession().insert("insertReview",bean);
 	
 	}
-	public Integer countReview() {
-		return this.getSqlSession().selectOne("countReview");
+	public Integer countReview(Integer pno) {
+		return this.getSqlSession().selectOne("countReview",pno);
 		
 	}
 	public List<SemiReserveBean> selectReserved(String id){

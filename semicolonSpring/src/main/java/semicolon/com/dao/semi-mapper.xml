@@ -532,8 +532,9 @@ INSERT INTO SEMIMEMBER VALUES
 		SELECT * FROM SEMIREVIEW
 		WHERE PNO=#{VALUE}
 	</select>
-	<select id="countReview" resultType="java.lang.Integer">
+	<select id="countReview" resultType="java.lang.Integer" parameterType="int">
 		SELECT COUNT(RVNO) FROM SEMIREVIEW
+		WHERE PNO=#{VALUE}
 	</select>
 	
 	<insert id="insertReview" parameterType="review">

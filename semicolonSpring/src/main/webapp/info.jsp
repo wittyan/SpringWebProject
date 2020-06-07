@@ -117,7 +117,7 @@
 	   		rvid=reList.get(i).getId();
    		}
 		
-		int countReview=suyeonSemiDao.countReview();
+		int countReview=suyeonSemiDao.countReview(pno1);
 	
 		
 		
