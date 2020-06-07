@@ -250,7 +250,7 @@
 		        <div id="reserve">
 		        	<div id="reserve_contents">
 		        		<h5>예약하기</h5><br>
-		                      <h2>Maldeve - Asia</h2> <!-- 고객이 선택한 상품명 -->
+		                      <h2 style="font-family:'휴먼옛체'"><%=np.getPname() %></h2> <!-- 고객이 선택한 상품명 -->
 		                      <!-- 달력 시작 -->              
 		                        <table border="1">
 		                 		<tr>
