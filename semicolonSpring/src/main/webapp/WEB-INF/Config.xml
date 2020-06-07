@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration
+PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration><!-- DB설정(Connection) -->   
+    <typeAliases> 
+        <typeAlias type="semicolon.com.bean.SemiMemberBean" alias="sbm"/>
+     	<typeAlias type="semicolon.com.bean.SemiProductBean" alias="product"/>
+     	<typeAlias type="semicolon.com.bean.SemiReserveBean" alias="reserve"/> 
+     	<typeAlias type="semicolon.com.bean.SemiReviewBean" alias="review"/> 
+     	<typeAlias type="semicolon.com.bean.SemiCompanyBean" alias="comlist"/>
+     	<typeAlias type="semicolon.com.bean.SemiPbean" alias="spb"/>
+     	<typeAlias type="semicolon.com.bean.zipBean" alias="zip"/>
+     	<typeAlias type="semicolon.com.bean.SemiReserveBean" alias="sreserve"/>
+     	
+    </typeAliases> 
+    <mappers>
+    
+      <mapper resource="semicolon/com/dao/semi-mapper.xml"/>
+      
+    </mappers>
+</configuration>
+
+
+
+
+
+

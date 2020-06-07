@@ -1,0 +1,571 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="semicolon.com.bean">
+  <!--************************  성수 ************************-->
+ 
+<insert id="anInsertsemiprefer" parameterType ="semicolon.com.bean.SemiPreferBean">
+INSERT INTO SEMIPREFER VALUES(PREFER_SEQ,#{pno},#{cno},#{pfagegroup},#{pffilename},#{pfprice},#{pfbuycount})
+</insert>
+<select id="anSelectReviewCountFromPno" parameterType="java.lang.Integer" resultType="java.lang.Integer">
+	SELECT COUNT(*)
+	FROM SEMIREVIEW
+	WHERE PNO=#{VALUE}
+</select>
+<select id="anSelectGradeFromPno" parameterType="java.lang.Integer" resultType="java.lang.Integer">
+	SELECT ROUND(AVG(RVGRADE)) GRADE
+	FROM SEMIREVIEW
+	WHERE pno = #{VALUE}
+	GROUP BY PNO
+</select>
+
+<select id="selectProductFromPname" parameterType="java.lang.String" resultType="product">
+		SELECT *
+	FROM (SELECT * FROM SEMIPRODUCT
+	WHERE PNAME=#{VALUE})
+	WHERE ROWNUM = 1
+</select>
+<insert id ="anInsertsemireserve" parameterType="sreserve" >
+	INSERT INTO SEMIRESERVE
+	VALUES(RESERVE_SEQ.NEXTVAL,#{id},#{cno},#{pno},#{rcount},TO_DATE(#{rdate},'yyyy-mm-dd-hh24-mi-ss'))
+</insert>
+<select id ="anselectProductFromPno" parameterType="int" resultType="product">
+	SELECT *
+	FROM SEMIPRODUCT
+	WHERE PNO= #{VALUE}
+</select>
+	<select id="selectPreferProductFromAge" parameterType="java.lang.String" resultType="product">
+		SELECT * FROM
+			(SELECT ROWNUM RM, p.pno, p.cno, p.pname , p.pprice, p.ptype, p.pfilename, p.pstock
+			FROM SEMIPRODUCT p, SEMIPREFER r
+			WHERE p.pno = r.pno AND r.pfagegroup = #{VALUE}
+			)
+			WHERE RM = 1
+	</select>
+	<update id="updateQstate" parameterType="int">
+		UPDATE SEMIQNA
+		SET QSTATE = 'false'
+		WHERE QNO= #{VALUE}
+	</update>
+	<update id="updateEprogress" parameterType="int">
+		UPDATE SEMIEVENT
+		SET EPROGRESS = 'false'
+		WHERE ENO= #{VALUE}
+	</update>
+	<select id="getProductTotalRow" resultType="int">
+		SELECT COUNT(*)
+		FROM
+		SEMIPRODUCT
+	</select>
+	
+	<select id="companyIdCheck" parameterType="java.lang.String"
+		resultType="java.lang.String">
+		SELECT CNAME FROM SEMICOMPANY
+		WHERE CNAME=#{VALUE}
+	</select>
+	
+	<select id="selectAgeGroup" resultType = "java.lang.String" parameterType="java.lang.String">
+		SELECT 
+			CASE 
+				WHEN BIRTHDATE BETWEEN 1 AND 19 THEN '10대'
+				WHEN BIRTHDATE BETWEEN 20 AND 29 THEN '20대'
+				WHEN BIRTHDATE BETWEEN 30 AND 39 THEN '30대'
+				WHEN BIRTHDATE BETWEEN 40 AND 49 THEN '40대'
+				WHEN BIRTHDATE BETWEEN 50 AND 59 THEN '50대'
+				WHEN BIRTHDATE BETWEEN 60 AND 69 THEN '60대'
+				WHEN BIRTHDATE BETWEEN 70 AND 79 THEN '70대'
+				WHEN BIRTHDATE BETWEEN 80 AND 89 THEN '80대'
+				WHEN BIRTHDATE BETWEEN 90 AND 99 THEN '90대'
+			END AGEGROUP
+		FROM (SELECT TO_NUMBER(TO_CHAR(SYSDATE,'YYYY'))-TO_NUMBER(TO_CHAR(BIRTHDATE,'YYYY'))+1 BIRTHDATE FROM SEMIMEMBER
+		WHERE ID = #{VALUE})
+		
+	</select>
+	<insert id="insertQna"
+		parameterType="semicolon.com.bean.SemiQnaBean">
+		INSERT INTO SEMIQNA
+		VALUES(#{qno},#{id},#{pno},#{cno},#{qtitle},0,SYSDATE,#{qfilename},#{qcontents},'true',
+		#{ref},#{pnum},#{lev},#{step},0)
+	</insert>
+	<insert id="insertNotice"
+		parameterType="semicolon.com.bean.SemiNoticeBean">
+		INSERT INTO SEMINOTICE
+		VALUES(#{nno},
+		#{id},#{ntitle},0,SYSDATE,#{ncontents})
+	</insert>
+	<insert id="insertEvent"
+		parameterType="semicolon.com.bean.SemiEventBean">
+		INSERT INTO SEMIEVENT
+		VALUES(#{eno},#{id},#{etitle},0,SYSDATE,#{econtents},#{efilename},'true')
+	</insert>
+
+	<insert id="insertCompany"
+		parameterType="comlist">
+		INSERT INTO SEMICOMPANY
+		VALUES(COMPANY_SEQ.NEXTVAL,#{cname},#{ctel},#{cadd})
+	</insert>
+
+	<insert id="insertProduct"
+		parameterType="product">
+		INSERT INTO SEMIPRODUCT
+		VALUES(PRODUCT_SEQ.NEXTVAL,#{cno},#{pname},#{pPrice},#{ptype},#{pfilename},#{pstock})
+	</insert>
+	<select id="loginIdCheckFun" parameterType="java.lang.String"
+		resultType="java.lang.String">
+		SELECT PASSWORD
+		FROM SEMIMEMBER
+		WHERE ID=#{VALUE}
+	</select>
+	<select id="idcheckProcess" parameterType="java.lang.String"
+		resultType="java.lang.String">
+		SELECT PASSWORD
+		FROM SEMIMEMBER
+		WHERE ID=#{VALUE}
+	</select>
+	
+
+	<update id="updateStep" parameterType="java.util.HashMap">
+		UPDATE SEMIQNA
+		SET STEP = STEP+1
+		WHERE REF = #{ref} AND STEP>#{step}
+	</update>
+	<update id="updateReply" parameterType="java.util.HashMap">
+		UPDATE SEMIQNA
+		SET
+		<choose>
+			<when test="mode=='reply'">
+				REPLY = REPLY+1
+			</when>
+			<otherwise>
+				REPLY = REPLY-1
+			</otherwise>
+		</choose>
+		WHERE QNO=#{num}
+	</update>
+
+
+	<update id="updateQna"
+		parameterType="semicolon.com.bean.SemiQnaBean">
+		UPDATE SEMIQNA
+		SET PNO = #{pno},
+		QTITLE = #{qtitle},
+		QFILENAME = #{qfilename},
+		QCONTENTS = #{qcontents}
+		WHERE QNO = #{qno}
+	</update>
+	<update id="updateNotice"
+		parameterType="semicolon.com.bean.SemiNoticeBean">
+		UPDATE SEMINOTICE
+		SET NTITLE = #{ntitle},
+		NCONTENTS = #{ncontents}
+		WHERE NNO = #{nno}
+
+	</update>
+	<update id="updateEvent"
+		parameterType="semicolon.com.bean.SemiEventBean">
+		UPDATE SEMIEVENT
+		SET ETITLE = #{etitle},
+		EFILENAME = #{efilename},
+		ECONTENTS = #{econtents}
+		WHERE ENO = #{eno}
+
+	</update>
+	<select id="getQnaSequence" resultType="java.lang.Integer">
+		SELECT QNA_SEQ.NEXTVAL FROM DUAL
+	</select>
+	<select id="getNoticeSequence" resultType="java.lang.Integer">
+		SELECT NOTICE_SEQ.NEXTVAL FROM DUAL
+	</select>
+	<select id="getEventSequence" resultType="java.lang.Integer">
+		SELECT EVENT_SEQ.NEXTVAL FROM DUAL
+	</select>
+	<select id="getReviewSequence" resultType="java.lang.Integer">
+		SELECT REVIEW_SEQ.NEXTVAL FROM DUAL
+	</select>
+	<select id="getCompanySequence" resultType="java.lang.Integer">
+		SELECT COMPANY_SEQ.NEXTVAL FROM DUAL
+	</select>
+	<select id="getReserveSequence" resultType="java.lang.Integer">
+		SELECT RESERVE_SEQ.NEXTVAL FROM DUAL
+	</select>
+	<select id="getPreferSequence" resultType="java.lang.Integer">
+		SELECT PREFER_SEQ.NEXTVAL FROM DUAL
+	</select>
+	<select id="getProductSequence" resultType="java.lang.Integer">
+		SELECT PRODUCT_SEQ.NEXTVAL FROM DUAL
+	</select>
+
+	<!-- parameterType="java.util.HashMap" -->
+	<select id="selectQna" resultType="semicolon.com.bean.SemiQnaBean"
+		parameterType="java.util.HashMap">
+		SELECT *
+		FROM(
+		SELECT ROWNUM RM,
+		QNO,ID,PNO,CNO,QTITLE,QHIT,QDATE,QFILENAME,QCONTENTS,QSTATE,REF,PNUM,LEV,STEP,REPLY
+		FROM(
+		SELECT QNO,ID,PNO,CNO,QTITLE,QHIT,TO_CHAR(QDATE,'YYYY-MM-DD')
+		QDATE,QFILENAME,QCONTENTS,QSTATE,REF,PNUM,LEV,STEP,REPLY
+		FROM SEMIQNA
+		ORDER BY REF DESC,STEP,LEV
+		))
+		WHERE RM BETWEEN #{start} AND #{end}
+
+	</select>
+	<select id="selectNotice"
+		resultType="semicolon.com.bean.SemiNoticeBean"
+		parameterType="java.util.HashMap">
+		SELECT *
+		FROM(
+		SELECT ROWNUM RM, NNO,ID,NTITLE,NHIT,NDATE,NCONTENTS
+		FROM(
+		SELECT NNO,ID,NTITLE,NHIT,TO_CHAR(NDATE,'YYYY-MM-DD') NDATE,NCONTENTS
+		FROM SEMINOTICE
+		ORDER BY NNO DESC
+		))
+		WHERE RM BETWEEN #{start} AND #{end}
+
+	</select>
+	<select id="selectEvent"
+		resultType="semicolon.com.bean.SemiEventBean"
+		parameterType="java.util.HashMap">
+		SELECT *
+		FROM(
+		SELECT ROWNUM RM, ENO,ID,ETITLE,EHIT,EDATE,ECONTENTS,EFILENAME,EPROGRESS
+		FROM (
+		SELECT ENO,ID,ETITLE,EHIT,TO_CHAR(EDATE,'YYYY-MM-DD')
+		EDATE,ECONTENTS,EFILENAME,EPROGRESS
+		FROM SEMIEVENT
+		ORDER BY ENO DESC
+		))
+		WHERE RM BETWEEN #{start} AND #{end}
+	</select>
+	
+
+
+	<select id="selectProduct"
+		resultType="product"
+		parameterType="java.util.HashMap">
+		<choose>
+			<when test="query==null or query=='new'">
+		SELECT *
+		FROM(
+		SELECT ROWNUM RM, PNO, CNO, PNAME, PPRICE, PTYPE, PFILENAME, PSTOCK
+		FROM(
+		SELECT PNO, CNO, PNAME, PPRICE, PTYPE, PFILENAME, PSTOCK
+		FROM SEMIPRODUCT
+		ORDER BY PNO))
+		WHERE RM BETWEEN #{start} AND #{end}
+			</when>
+			<when test="query=='lowprice'">
+			SELECT *
+		FROM(
+		SELECT ROWNUM RM, PNO, CNO, PNAME, PPRICE, PTYPE, PFILENAME, PSTOCK
+		FROM(
+		SELECT PNO, CNO, PNAME, PPRICE, PTYPE, PFILENAME, PSTOCK
+		FROM SEMIPRODUCT
+		ORDER BY PPRICE ASC))
+		WHERE RM BETWEEN #{start} AND #{end}
+			</when>
+			<when test="query=='highprice'">
+			SELECT *
+		FROM(
+		SELECT ROWNUM RM, PNO, CNO, PNAME, PPRICE, PTYPE, PFILENAME, PSTOCK
+		FROM(
+		SELECT PNO, CNO, PNAME, PPRICE, PTYPE, PFILENAME, PSTOCK
+		FROM SEMIPRODUCT
+			ORDER BY PPRICE DESC))
+		WHERE RM BETWEEN #{start} AND #{end}
+			</when>
+			<when test="query=='company'">
+			SELECT *
+		FROM(
+		SELECT ROWNUM RM, PNO, CNO, PNAME, PPRICE, PTYPE, PFILENAME, PSTOCK
+		FROM(
+		SELECT PNO, CNO, PNAME, PPRICE, PTYPE, PFILENAME, PSTOCK
+		FROM SEMIPRODUCT
+			ORDER BY CNO))
+		WHERE RM BETWEEN #{start} AND #{end}
+			</when>
+			<when test="query=='type'">
+			SELECT *
+		FROM(
+		SELECT ROWNUM RM, PNO, CNO, PNAME, PPRICE, PTYPE, PFILENAME, PSTOCK
+		FROM(
+		SELECT PNO, CNO, PNAME, PPRICE, PTYPE, PFILENAME, PSTOCK
+		FROM SEMIPRODUCT
+			ORDER BY PTYPE))
+		WHERE RM BETWEEN #{start} AND #{end}
+			</when>
+		</choose>
+	</select>
+	<select id="selectAllProduct"
+		resultType="product">
+		SELECT *
+		FROM SEMIPRODUCT
+	</select>
+
+	<select id="getCnameFromPno" resultType="java.lang.String"
+		parameterType="int">
+		SELECT c.CNAME
+		FROM SEMIPRODUCT p, SEMICOMPANY c
+		WHERE p.cno = c.cno AND p.pno = #{VALUE}
+	</select>
+	<select id="selectCompany"
+		resultType="comlist">
+		SELECT *
+		FROM SEMICOMPANY
+	</select>
+	<select id="selectPnameFromPno" parameterType="int"
+		resultType="String">
+		SELECT PNAME
+		FROM SEMIPRODUCT
+		WHERE PNO = #{VALUE}
+	</select>
+
+
+	<select id="NoticeTotalRow" resultType="int">
+		SELECT COUNT(*)
+		FROM
+		SEMINOTICE
+	</select>
+	<select id="EventTotalRow" resultType="int">
+		SELECT COUNT(*)
+		FROM
+		SEMIEVENT
+	</select>
+	<select id="QnaTotalRow" resultType="int">
+		SELECT COUNT(*)
+		FROM SEMIQNA
+	</select>
+	<select id="qnaInfo" parameterType="int"
+		resultType="semicolon.com.bean.SemiQnaBean">
+		SELECT *
+		FROM SEMIQNA
+		WHERE QNO=#{VALUE}
+	</select>
+	<select id="noticeInfo" parameterType="int"
+		resultType="semicolon.com.bean.SemiNoticeBean">
+		SELECT *
+		FROM SEMINOTICE
+		WHERE NNO=#{VALUE}
+	</select>
+	<select id="eventInfo" parameterType="int"
+		resultType="semicolon.com.bean.SemiEventBean">
+		SELECT *
+		FROM SEMIEVENT
+		WHERE ENO=#{VALUE}
+	</select>
+
+	<delete id="deleteQna" parameterType="java.lang.Integer">
+		DELETE FROM SEMIQNA
+		WHERE QNO=#{VALUE}
+	</delete>
+	<delete id="deleteEvent" parameterType="java.lang.Integer">
+		DELETE FROM SEMIEVENT
+		WHERE ENO=#{VALUE}
+	</delete>
+	<delete id="deleteNotice" parameterType="java.lang.Integer">
+		DELETE FROM SEMINOTICE
+		WHERE NNO=#{VALUE}
+	</delete>
+
+	<select id="getCnoFromPno" parameterType="java.lang.Integer"
+		resultType="java.lang.Integer">
+		SELECT CNO
+		FROM SEMIPRODUCT
+		WHERE PNO=#{VALUE}
+
+	</select>
+<!--************************  성수끝 ************************-->
+
+
+
+<!--************************  혜림 ************************-->
+<select id="mySelectMember" parameterType="java.lang.String" resultType="sbm">
+SELECT ID, NAME,	NICKNAME,	PASSWORD,	GENDER,	TEL, BIRTHDATE,	EMAIL,	ADDRESS
+FROM SEMIMEMBER
+WHERE ID=#{id}
+</select>
+
+<select id="mySelectReserve" parameterType="java.lang.String" resultType="sreserve">
+SELECT RNO,ID,CNO,PNO,RCOUNT,RDATE
+FROM SEMIRESERVE
+WHERE ID=#{id}
+</select>
+
+<select id="mySelectProduct" parameterType="java.lang.Integer" resultType="product">
+SELECT PNO,CNO,PNAME,PPRICE,PTYPE,PFILENAME
+FROM SEMIPRODUCT
+WHERE PNO=#{pno}
+</select>
+<select id="mySelectCompany" parameterType="java.lang.Integer" resultType="comlist">
+SELECT CNO,CNAME,CTEL,CADD
+FROM SEMICOMPANY
+WHERE CNO=#{cno}
+</select>
+<update id="myUpdateMember" parameterType="sbm">
+UPDATE SEMIMEMBER SET 
+NAME=#{name},
+NICKNAME=#{nickname},
+PASSWORD=#{password},
+GENDER=#{gender},
+TEL=#{tel},
+EMAIL=#{email},
+ADDRESS=#{address}
+WHERE ID=#{id}
+</update>
+<select id="APselectProduct" resultType="product">
+SELECT * FROM SEMIPRODUCT
+</select>
+<update id="APupdateProduct" parameterType="product">
+UPDATE SEMIPRODUCT SET
+PNAME=#{pname},CNO=${cno},PPRICE=${pPrice},PTYPE=#{ptype},PFILENAME=#{pfilename},PSTOCK=${pstock}
+WHERE PNO=${pno}
+</update>
+
+<!--************************  혜림끝************************-->
+
+
+
+
+<!-- 태훈 -->
+
+<select id="selectDong" parameterType="java.lang.String" resultType="zip">
+SELECT ZIPCODE,SIDO,GUGUN,DONG,NVL(BUNJI,' ')BUNJI
+FROM ZIPCODE
+WHERE DONG LIKE '%'||#{VALUE}||'%'
+</select>
+
+<select id="selectProductName1" parameterType="int" resultType="java.lang.String">
+SELECT PNAME FROM SEMIPRODUCT
+WHERE CNO=#{VALUE}
+</select>
+
+<select id="selectComName1" resultType="java.lang.String">
+SELECT CNAME 
+FROM SEMICOMPANY
+</select>
+
+<select id="propriceCheck" parameterType="java.lang.String" resultType="java.lang.Integer">
+SELECT PPRICE 
+FROM SEMIPRODUCT
+WHERE PNAME=#{VALUE}
+</select>
+
+<select id="SeleComNameFun1" parameterType="java.lang.Integer" resultType="java.lang.String">
+SELECT CNAME 
+FROM SEMICOMPANY
+WHERE CNO=#{VALUE}
+</select>
+<select resultType="semicolon.com.bean.SemiList1" id="SeleMbltall"> 
+SELECT ID,CNAME,PNAME,RCOUNT,PPRICE,RDATE FROM SMMEMBER
+</select>
+
+<select resultType="spb" parameterType="java.lang.String" id="SeleMbltIwannt">
+ SELECT K.ID, K.CNT, S.SUM FROM SEMICOUNT K, (SELECT ID, SUM(PPRICE) SUM FROM SMMEMBER GROUP BY ID) 
+ S WHERE K.ID=S.ID ORDER BY K.CNT DESC 
+ </select>
+
+<select resultType="spb" parameterType="java.lang.String" id="SeleMbltIwannt1">
+SELECT K.ID, K.CNT, S.SUM FROM SEMICOUNT K, (SELECT ID, SUM(PPRICE) SUM FROM SMMEMBER GROUP BY ID) 
+S WHERE K.ID=S.ID ORDER BY S.SUM DESC 
+</select>
+
+<select id="seleComList" resultType="comlist">
+SELECT CNO,CNAME,CTEL,CADD
+FROM SEMICOMPANY
+</select>
+
+<select id="selePriceSum" resultType="java.lang.Integer">SELECT SUM(PPRICE)SUM FROM SMMEMBER</select>
+
+<select id="selectMe111" parameterType="java.lang.String" resultType="semicolon.com.bean.SemiList1">
+SELECT ID,CNAME,PNAME,RCOUNT,PPRICE,RDATE
+FROM SMMEMBER
+WHERE ID=#{VALUE}
+</select>
+<select id="selectMeprice" parameterType="java.lang.String" resultType="java.lang.Integer">
+SELECT SUM(PPRICE)
+FROM SMMEMBER
+WHERE ID=#{VALUE}
+</select>
+
+<update id="updateCompanyList" parameterType="comlist">
+UPDATE SEMICOMPANY
+SET 
+CNAME=#{cname},
+CTEL=#{ctel},
+CADD=#{cadd}
+WHERE CNO=#{cno}
+</update>
+
+<!-- 5/27 -->
+
+<select id="selectTop4" resultType="product">
+SELECT PNO,CNO,PNAME,PPRICE,PTYPE,PFILENAME,PSTOCK
+FROM SEMIPRODUCT
+WHERE PNAME in (SELECT PNAME
+FROM
+(SELECT RANK()OVER(ORDER BY CNT DESC) AS RK, PNAME
+FROM
+(SELECT COUNT(*) CNT,PNAME
+FROM SMMEMBER
+GROUP BY PNAME))
+WHERE RK BETWEEN 1 AND 4)
+</select>
+
+
+<!-- 5/28 -->
+
+
+<insert id="insertMember" parameterType="sbm">
+INSERT INTO SEMIMEMBER VALUES
+(#{id},#{name},#{nickname},#{password},#{gender},#{tel},#{birthdate},#{email},#{address})
+</insert>
+
+
+<!-- /태훈 -->
+
+
+<!-- 수연 -->
+	<select id="selectReview" resultType="review" parameterType="int">
+		SELECT * FROM SEMIREVIEW
+		WHERE PNO=#{VALUE}
+	</select>
+	<select id="countReview" resultType="java.lang.Integer">
+		SELECT COUNT(RVNO) FROM SEMIREVIEW
+	</select>
+	
+	<insert id="insertReview" parameterType="review">
+		INSERT INTO SEMIREVIEW VALUES(
+		REVIEW_SEQ.NEXTVAL,	#{pno},#{cno},#{id},#{rvcontents},#{rvfilename},SYSDATE,#{rvgrade}
+		)
+	</insert>
+	
+	<select id="selectReserved" resultType="reserve" parameterType="java.lang.String">
+		SELECT RNO,ID,CNO,PNO,RCOUNT,RDATE
+		FROM SEMIRESERVE
+		WHERE ID=#{VALUE}
+	</select>
+	
+	<select id="selectProductName" resultType="java.lang.String" parameterType="java.lang.Integer">
+		SELECT PNAME FROM SEMIPRODUCT
+		WHERE PNO=#{pno}
+	</select>
+<!-- 수연 -->
+<!--************************  대현 ************************-->
+<!--************************  대현끝 ************************-->
+  
+</mapper>
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,234 @@
+div#wrap{
+	width: 100%; height: auto;
+}
+section.event_part{
+   background-image: url(../img/info_bg2.jpg);
+   background-position: center;
+      background-size: cover;
+      background-repeat: no-repeat;
+}
+div#reserve{
+		display: block;
+		float: right;
+		position: relative;
+		z-index: 10;
+		width: 40%; height: 650px;
+		background-color: #fff;
+} 
+div#reserve_contents{
+	margin: 0 auto;
+	width: 70%; height: 550px;
+	padding-top: 20px;
+}
+
+div.rating{
+	margin-bottom: 10px;
+}
+a.btn_1{
+	margin: 0 auto;
+}
+div.imgContainer{
+	position: relative;
+	z-index: 10;
+}
+section#productReview{
+	position: relative;
+	width: 60%; height: 1800px;
+	margin: 0 auto;
+	border: 1px solid #eee;
+}
+#img{
+	float: left;
+	margin: 50px auto;
+	display: block;
+	position: relative;
+	top: 50px; left: 200px;
+}
+div#review{
+	margin: 10px 20px;
+	
+}
+div.sortReview{
+	float: right;	
+	margin-top: 20px;
+}
+	ul#sortReview > li{
+		float: left;
+		list-style: none;
+		margin-right: 10px;
+	}
+	ul#sortReview > li.liFirst{
+		font-size: 1.2em;
+		line-height: 1.2em;
+		font-weight: bold;
+	}
+		ul#sortReview > li > a{
+			text-decoration: none;
+			color: #000;
+		}
+
+div#reviewTop{
+	float: left;	
+	width: 100%;
+	border-bottom: 5px solid #000;
+}
+
+/* div#reviewCount{
+	position: absolute;
+	margin: 170px auto;
+	width: 500px; height: 200px;
+	background-color: #ccc;	
+}
+	div#reviewCount > ul{
+		width: 100%;
+		border: 1px solid #000;
+	}
+		div#reviewCount > ul > li{
+			float: left;
+			color: #000;
+			border: 1px solid #000;
+		}
+
+ */
+ 	div#reviewPaging{
+ 		width: 500px; height: 50px;
+ 		position: absolute;
+ 		left: 50%; top: 530px;
+ 		margin-left: -250px;
+ 	}
+ 		div#reviewPaging > ul{
+			width: 50%; 
+			margin: 0 auto;			
+ 		}
+ 			div#reviewPaging > ul > li{
+ 				float: left;
+ 				width: 40px; height: 40px;
+ 				margin-left: 40px;
+ 				border: 1px solid #eee;
+ 				text-align: center;
+				line-height: 40px;
+ 			}
+ 			div#reviewPaging > ul > li.pagingli_s,div#reviewPaging > ul > li.pagingli_t{
+ 				/* margin-left: 30px; */
+ 			}
+ 				div#reviewPaging > ul > li > a{
+ 					
+ 				}
+					div#reviewPaging > ul > li > a > i{
+ 						font-weight: bold;
+ 						font-size: 1.5em;
+ 					}
+					
+	div#reviewUl{
+		width: 700px; height: 250px;
+		padding: 20px;
+		position: absolute;
+		left: 50%; bottom: 300px; top: 250px;
+		margin-left: -350px;
+		margin-bottom: 100px;
+		border: 1px solid #000;
+	}
+		div#reviewUl > ul{		
+			width: 100%;
+		}
+	
+		div#reviewUl > ul.reviewUl3 {
+			margin-top: 10px;
+		}
+		
+			div#reviewUl > ul > li{
+				/* float: left; */
+				display: inline-block;
+				/* border: 1px solid #000; */
+				
+			}
+			
+			div#reviewUl > ul.reviewUl1 > li{
+				width: 15%; height: 20px;
+			}
+			div#reviewUl > ul.reviewUl2 > li.rvid{
+				width: 20%; height:20px;
+			}
+			div#reviewUl > ul.reviewUl2 > li.rvdate{
+				width: 35%; height:20px;
+			}
+			div#reviewUl > ul.reviewUl2 > li.rvpname{
+				width: 30%; height:20px;
+			}
+			
+			div#reviewUl > ul.reviewUl3 > li{
+				height: 50px;
+			}
+			
+			div#reviewUl > ul.reviewUl3 > li.reviewContents{
+				width: 50%;
+			}
+			div#reviewUl > ul.reviewUl3 > li.reviewImage{
+				width: 150px; height: 50px;
+				margin-left: 20px;
+			}
+			div#reviewUl > ul.reviewUl3 > li.reviewHit{
+				width: 7%;
+				float: right;
+			}
+			
+				div#reviewUl > ul.reviewUl3 > li.reviewImage > img{
+					diaplay: block;
+					width: 100px; height: 100px;
+					line-height: 100px;
+				}
+			
+div#frmDiv{
+	width: 700px;
+	display: block;
+	position: absolute;
+	left: 50%; top: 600px;
+	margin-left: -350px;
+	/* border: 1px solid #000; 	 */
+}	
+	div#frmDiv > form{
+		line-height: 20px;
+	}
+		div#frmDiv > form > table{}
+			div#frmDiv > form > table > tr{}
+				div#frmDiv > form > table > tr > td.rvcontents{
+					margin: 0 auto;
+				}
+				div#frmDiv > form > table > tr > td.rvfilename{
+					margin: 0 auto;
+				}
+	div#frmDiv > form input#send{
+		position: absolute;
+		width: 100px; height: 60px;
+		left: 50%; top: 300px;
+		margin-left: -50px;
+	}
+	
+section#productInfo{
+	margin: 20px auto;
+	border: 1px solid lightgray;
+	width: 80%; height: 500px;
+}
+	section#productInfo h1{
+		font-weight: bold;
+		line-height: 500px;
+		text-align: center;
+		font-size: 5em;
+	}
+
+div.rating > div.place_review > a{
+	color: #ffc962;
+}	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+
+		
