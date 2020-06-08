@@ -37,7 +37,7 @@ $(function(){
 				//console.log(rst);
 			});//each
 //			rst+="&pno="+modId;
-			console.log(rst);
+			console.log(rst);R
 			$.ajax({
 				url:"/team/modProduct.do?cmd=modProduct",
 				type:'post', 

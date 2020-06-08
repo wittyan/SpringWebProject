@@ -4,6 +4,23 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="semicolon.com.bean">
   <!--************************  성수 ************************-->
+
+<select id="anSelectProductFromPno" parameterType="int" resultType="semicolon.com.bean.SemiProductBean">
+	SELECT *
+	FROM SEMIPRODUCT
+	WHERE PNO = #{VALUE}
+</select>
+ <select id="anSelectMemberInfo" parameterType="java.lang.String" resultType="semicolon.com.bean.SemiMemberBean">
+ SELECT * FROM
+ SEMIMEMBER
+ WHERE ID = #{ID}
+ </select>
+ <select id="anSelectCompany" parameterType="int" resultType="semicolon.com.bean.SemiCompanyBean">
+ SELECT * FROM
+ SEMICOMPANY
+ WHERE CNO = #{cno}
+ </select>
+ 
  
 <insert id="anInsertsemiprefer" parameterType ="semicolon.com.bean.SemiPreferBean">
 INSERT INTO SEMIPREFER VALUES(PREFER_SEQ,#{pno},#{cno},#{pfagegroup},#{pffilename},#{pfprice},#{pfbuycount})
@@ -532,8 +549,9 @@ INSERT INTO SEMIMEMBER VALUES
 		SELECT * FROM SEMIREVIEW
 		WHERE PNO=#{VALUE}
 	</select>
-	<select id="countReview" resultType="java.lang.Integer">
+	<select id="countReview" resultType="java.lang.Integer" parameterType="int">
 		SELECT COUNT(RVNO) FROM SEMIREVIEW
+		WHERE PNO=#{VALUE}
 	</select>
 	
 	<insert id="insertReview" parameterType="review">

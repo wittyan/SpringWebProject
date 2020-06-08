@@ -4,6 +4,9 @@
 <%@page import="semicolon.com.dao.AddressDao"%>
 <%@ page language="java" contentType="text/html; charset=EUC-KR"
 	pageEncoding="EUC-KR"%>
+	<%@ taglib prefix="c" uri="http://java.sun.com/jstl/core_rt"%>
+<%@ taglib prefix="fn"
+	uri="http://java.sun.com/jsp/jstl/functions"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
@@ -23,7 +26,7 @@
 
 <body>
 
-	<form action="" name="searchFrm" method="post">
+	<form action="caddress.do" name="searchFrm" method="post" accept-charset="utf-8">
 		<table width="400" height="380" border="0" cellpadding="0"
 			cellspacing="0">
 			<tr>
@@ -88,15 +91,13 @@
 									<table width="100%" height="120" border="0" cellpadding="0"
 										cellspacing="0" bgcolor="#FFFFFF" class="gray_blue">
 										
-								 	 <%if(dong!=null){ %>
-
+										<c:if test="${dong ne null}">
+								 	
+								 	
+								 	<c:forEach var = "i" items="${list}" varStatus="cnt">
 										
-										<%
-										  for(int i = 0; i < list.size(); i++){
-											  zipBean zb = new zipBean();
-											  zb = list.get(i);
-											  String addrr=zb.getZipcode().trim()+"-"+zb.getSido().trim()+zb.getGugun().trim()+zb.getDong().trim()+zb.getBunji().trim();
-										%>
+										<c:set var="addrr" value = "${fn:trim(i.zipcode)}${ fn:trim(i.gugun)}${ fn:trim(i.dong)}${ fn:trim(i.bunji)	}"/>
+										
 										<tr>
 										   <td height="8"></td>
 										</tr>
@@ -106,12 +107,10 @@
 											<td><a href="#" name="addr"><%=zb.getGugun() %></a></td>
 											<td><a href="#" name="addr"><%=zb.getDong() %></a></td>
 											<td><a href="#" name="addr"><%=zb.getBunji() %></a></td> --%>
-											<td><a href="#" name="addr"><%=addrr %></a></td>											
+											<td><a href="#" name="addr">${addrr }</a></td>											
 										</tr>
-										<%
-										  }
-										 }
-										%>  
+											</c:forEach> 
+										</c:if> 
 									</table>
 								</div>
 							</td>

@@ -43,6 +43,7 @@ $(function(){
 			alert('텍스트를 입력하십시오.');
 			return false;
 		}
+		$("form").submit();
 	});
 	
 	$("a[name='addr']").click(function(){

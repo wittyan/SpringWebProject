@@ -12,19 +12,15 @@ import org.springframework.stereotype.Component;
 import semicolon.com.bean.zipBean;
 
 @Component
-public class AddressDao extends SqlSessionDaoSupport {
-
+public class AddressDao extends SqlSessionDaoSupport{
 	
 	@Autowired
 	protected void initDao(SqlSessionTemplate st) throws Exception {
-		
 		this.setSqlSessionTemplate(st);
-
 	}
 
 	public List<zipBean>selectDong(String dong) {
-		return this.getSqlSession().selectList("selectDong",dong);
-		
+			return this.getSqlSession().selectList("selectDong",dong);
 	}
 	
 }

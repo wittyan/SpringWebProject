@@ -20,12 +20,15 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
+import com.sun.xml.bind.v2.schemagen.xmlschema.List;
+
 import semicolon.com.bean.PageBean;
 import semicolon.com.bean.SemiEventBean;
 import semicolon.com.bean.SemiNoticeBean;
 import semicolon.com.bean.SemiProductBean;
 import semicolon.com.bean.SemiQnaBean;
 import semicolon.com.bean.SemiReviewBean;
+import semicolon.com.bean.zipBean;
 import semicolon.com.dao.APListDao;
 import semicolon.com.dao.AddressDao;
 import semicolon.com.dao.AppleDao;
@@ -49,6 +52,8 @@ public class SemiController {
 	public static MyPageDao stmyPageDao;
 	@Inject
 	TaehoonDao tdao;
+	@Resource
+	AddressDao Adrdao;
 
 	@Resource
 	SungsuDao Sdao;
@@ -806,15 +811,13 @@ public class SemiController {
 
 	@RequestMapping(value = "registerProcess.do")
 	public String registerProcessFunc(HttpServletRequest request, HttpServletResponse response, Model model) {
-		
-		
+
 		model.addAttribute("appleDao", Adao);
 		
 		return "registerProcess";
 	}
 	@RequestMapping(value = "registerProduct.do")
 	public String registerProductFunc(HttpServletRequest request, HttpServletResponse response, Model model) {
-		
 		
 		model.addAttribute("appleDao", Adao);
 		
@@ -909,8 +912,6 @@ public class SemiController {
 
 		int cno = Adao.getCnoFromPno(pno);
 		
-		
-		
 		model.addAttribute("spb",Adao.anSelectProductFromPno(pno));
 		model.addAttribute("company",Adao.anSelectCompany(cno));
 		model.addAttribute("member", Adao.anSelectMemberInfo(id));
@@ -921,5 +922,22 @@ public class SemiController {
 		
 		return "inforeserveCheck";
 	}
+	@RequestMapping(value="caddress.do")
+	public String cadressFunc(HttpServletRequest request,Model model) {
+		try {
+			request.setCharacterEncoding("utf-8");
+		} catch (UnsupportedEncodingException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		String dong = request.getParameter("dong");  
+		java.util.List<zipBean>list = dong!=null?Adrdao.selectDong(dong):null;
 
+		System.out.println("caddress.do");
+		System.out.println(list);
+		System.out.println(dong);
+		model.addAttribute("list", list);
+		model.addAttribute("dong", dong);
+		return "caddress";
+	}
 }

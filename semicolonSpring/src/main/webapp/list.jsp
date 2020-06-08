@@ -17,18 +17,16 @@
 <!doctype html>
 <html lang="en">
 <%
-
-AppleDao appleDao = (AppleDao)request.getAttribute("appleDao");
-TaehoonDao taehoonDao = (TaehoonDao)request.getAttribute("taehoonDao");
-SungsuDao sungsuDao = (SungsuDao)request.getAttribute("sungsuDao");
-
+	AppleDao appleDao = (AppleDao) request.getAttribute("appleDao");
+	TaehoonDao taehoonDao = (TaehoonDao) request.getAttribute("taehoonDao");
+	SungsuDao sungsuDao = (SungsuDao) request.getAttribute("sungsuDao");
 
 	request.setCharacterEncoding("EUC-KR");
 	String pageData = request.getParameter("page");
 
 	ArrayList<SemiProductBean> pList = null;
 	//String id = (String) request.getSession().getAttribute("id"); //request에서 아이디 넘기는 걸로?
-     String id = request.getParameter("id");
+	String id = request.getParameter("id");
 	/* if (id == null) {
 		id = "DOE";
 	} */
@@ -48,8 +46,8 @@ SungsuDao sungsuDao = (SungsuDao)request.getAttribute("sungsuDao");
 		currentPage = 1;
 	}
 	int currentBlock = (currentPage % pageScale == 0)
-	? (currentPage / pageScale)
-	: (currentPage / pageScale) + 1;
+			? (currentPage / pageScale)
+			: (currentPage / pageScale) + 1;
 
 	int start = 1 + (currentPage - 1) * productScale;
 	int end = productScale + (currentPage - 1) * productScale;
@@ -103,78 +101,66 @@ SungsuDao sungsuDao = (SungsuDao)request.getAttribute("sungsuDao");
 <script type="text/javascript"
 	src="https://code.jquery.com/jquery-3.5.0.min.js"></script>
 <script type="text/javascript">
-$(function() {
+	$(function() {
 
-	// 기존 css에서 플로팅 배너 위치(top)값을 가져와 저장한다.
-	var floatPosition = parseInt($("#floatMenu").css('top'));
-	// 250px 이런식으로 가져오므로 여기서 숫자만 가져온다. parseInt( 값 );
-
-	<%try{%>
+		// 기존 css에서 플로팅 배너 위치(top)값을 가져와 저장한다.
+		var floatPosition = parseInt($("#floatMenu").css('top'));
+		// 250px 이런식으로 가져오므로 여기서 숫자만 가져온다. parseInt( 값 );
+<%try {%>
 	var listsize = 0;
-	listsize = <%=pList.size()%>
-		<%}catch(Exception e){
-			
-		}%>
+		listsize =
+<%=pList.size()%>
+	
+<%} catch (Exception e) {
 
-		
+			}%>
 	console.log(listsize);
-		if(isNaN(listsize)||listsize==0){
-		$("div#floatMenu").css("display","none");
-		$("input#search").hide();
-		$("select[name=query]").hide();
-		$("span#emptySpan").show();
-		
-		listsize=1;
+		if (isNaN(listsize) || listsize == 0) {
+			$("div#floatMenu").css("display", "none");
+			$("input#search").hide();
+			$("select[name=query]").hide();
+			$("span#emptySpan").show();
+			listsize = 1;
 		}
-$(window).scroll(function() {
-		// 현재 스크롤 위치를 가져온다.
-		var scrollTop = $(window).scrollTop();
+		$(window).scroll(function() {
+			// 현재 스크롤 위치를 가져온다.
+			var scrollTop = $(window).scrollTop();
+			var temp = scrollTop + floatPosition;
 
-		var temp = scrollTop + floatPosition;
+			var upSize = 600;
+			var downSize = 2000;
 
-		var upSize = 600;
-		var downSize = 2000;
+			var size = Math.floor(listsize / 4);
+			if (size == 0) {
+				downSize = downSize / 10 * 4;
+			} else if (size == 1) {
+				downSize = downSize / 10 * 7;
+			}
+			if (temp <= upSize)
+				temp = upSize;
+			if (temp >= downSize)
+				temp = downSize;
+			var newPosition = temp + "px";
+			/* 애니메이션 없이 바로 따라감
+			 $("#floatMenu").css('top', newPosition);
+			 */
+			$("#floatMenu").stop().animate({
+				"top" : newPosition
+			}, 500);
+		}).scroll();
 
-		var size = Math.floor(listsize / 4);
-		if (size == 0) {
+		$("input#search").click(function() {
+			var select = $("select[name=query] option:selected").val();
 
-			downSize = downSize / 10 * 4;
+			if (select == 'empty') {
+				alert('선택하세요');
+				return false;
+			}
 
-		} else if (size == 1) {
-			downSize = downSize / 10 * 7;
+			$("form[name=searchForm]").submit();
+		});
 
-		}
-
-		if (temp <= upSize)
-			temp = upSize;
-		if (temp >= downSize)
-			temp = downSize;
-
-		var newPosition = temp + "px";
-
-		/* 애니메이션 없이 바로 따라감
-		 $("#floatMenu").css('top', newPosition);
-		 */
-
-		$("#floatMenu").stop().animate({
-			"top" : newPosition
-		}, 500);
-
-	}).scroll();
-
-
-	$("input#search").click(function() {
-		var select = $("select[name=query] option:selected").val();
-
-		if (select == 'empty') {
-			alert('선택하세요');
-			return false;
-		}
-
-		$("form[name=searchForm]").submit();
 	});
-
-});
 </script>
 <style>
 #floatMenu {
@@ -186,26 +172,26 @@ $(window).scroll(function() {
 	top: 250px;
 	background-color: #F0F0F0;
 	border: 1px solid black;
-	 box-shadow: 10px 10px 10px 5px grey;
+	box-shadow: 10px 10px 10px 5px grey;
 }
+
 select#sesort {
-width: 130px;
-padding: .4em .5em;
-border: 1px solid #999;
-font-family: inherit;
-background: url('/team/semiupload/arrow.jpg') no-repeat 95% 50%;
-border-radius: 0px;
--webkit-appearance: none;
--moz-appearance: none;
-appearance: none;
+	width: 130px;
+	padding: .4em .5em;
+	border: 1px solid #999;
+	font-family: inherit;
+	background: url('/team/semiupload/arrow.jpg') no-repeat 95% 50%;
+	border-radius: 0px;
+	-webkit-appearance: none;
+	-moz-appearance: none;
+	appearance: none;
 }
 
 select#sesort::-ms-expand {
-    display: none;
+	display: none;
 }
 
-
-출처: https://doolyit.tistory.com/126 [동해둘리의 IT Study]
+출처: https: //doolyit.tistory.com /126 [동해둘리의 IT Study]
 .pageCenter {
 	text-align: center;
 }
@@ -228,32 +214,48 @@ select#sesort::-ms-expand {
 }
 .pagination
 
+
  
 
+
 a
+
+
 
 
 :hover
 
 
+
+
 :not
 
+
  
+
 
 (
 .active
 
+
  
+
 
 )
 {
 background-color
 
 
+
+
 :
 
 
+
+
 #ddd
+
+
 
 
 ;
@@ -265,7 +267,7 @@ background-color
 
 
 	<!--::header part start::-->
-<header class="main_menu">
+	<header class="main_menu">
 		<div class="sub_menu">
 			<div class="container">
 				<div class="row">
@@ -274,21 +276,24 @@ background-color
 				<div class="col-lg-6 col-sm-12 col-md-6">
 					<div class="sub_menu_right_content">
 
-						
+
 						<c:choose>
-						<c:when test="${id ne null}">
-						<span>${id }님 안녕하세요</span> <a href="loginMain.jsp">로그아웃</a> <a
-							href="myInfo.do?id=${id }">마이 페이지</a>
-						<c:if test="${id eq 'admin'}">
-						<a href="admincontrolMain.do">관리자페이지</a>
-						</c:if>
-						</c:when>
-						<c:otherwise>
-						
-						<span>비회원</span> <a href="loginMain.jsp">로그인</a> <a href="#">마이
-							페이지</a> <a href="mypage.do"></a>
-						
-						</c:otherwise>
+							<c:when test="${id ne null}">
+								<span>${id }님 안녕하세요</span>
+								<a href="loginMain.jsp">로그아웃</a>
+								<a href="myInfo.do?id=${id }">마이 페이지</a>
+								<c:if test="${id eq 'admin'}">
+									<a href="admincontrolMain.do">관리자페이지</a>
+								</c:if>
+							</c:when>
+							<c:otherwise>
+
+								<span>비회원</span>
+								<a href="loginMain.jsp">로그인</a>
+								<a href="#">마이 페이지</a>
+								<a href="mypage.do"></a>
+
+							</c:otherwise>
 						</c:choose>
 					</div>
 				</div>
@@ -296,40 +301,41 @@ background-color
 			</div>
 		</div>
 
-	 <div class="main_menu_iner">
-            <div class="container">
-                <div class="row align-items-center ">
-                    <div class="col-lg-12">
-                        <nav class="navbar navbar-expand-lg navbar-light justify-content-between">
-                            <a class="navbar-brand" href="/team/index.do"> <img src="/team/img/semi_logo.png" alt="logo" width="200" height="80"> </a>
-                            <button class="navbar-toggler" type="button" data-toggle="collapse"
-                                data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
-                                aria-expanded="false" aria-label="Toggle navigation">
-                                <span class="navbar-toggler-icon"></span>
-                            </button>
+		<div class="main_menu_iner">
+			<div class="container">
+				<div class="row align-items-center ">
+					<div class="col-lg-12">
+						<nav
+							class="navbar navbar-expand-lg navbar-light justify-content-between">
+							<a class="navbar-brand" href="/team/index.do"> <img
+								src="/team/img/semi_logo.png" alt="logo" width="200" height="80">
+							</a>
+							<button class="navbar-toggler" type="button"
+								data-toggle="collapse" data-target="#navbarSupportedContent"
+								aria-controls="navbarSupportedContent" aria-expanded="false"
+								aria-label="Toggle navigation">
+								<span class="navbar-toggler-icon"></span>
+							</button>
 
-                            <div class="collapse navbar-collapse main-menu-item justify-content-center"
-                                id="navbarSupportedContent">
-                                <ul class="navbar-nav">
-                                     <li class="nav-item">
-                                        <a class="nav-link" href="/team/index.do?id=<%=id%>">Home</a>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a class="nav-link" href="/team/list.do?page=1&id=<%=id%>">상품목록</a>
-                                        
-                                    </li>
-                                    <li class="nav-item">
-                                        <a class="nav-link" href="/team/communityList.do?id=<%=id%>">커뮤니티</a>
-                                    </li>
-                                    
-                                </ul>
-                            </div>
-                            <a href="#" class="btn_1 d-none d-lg-block">book now</a>
-                        </nav>
-                    </div>
-                </div>
-            </div>
-        </div>
+							<div
+								class="collapse navbar-collapse main-menu-item justify-content-center"
+								id="navbarSupportedContent">
+								<ul class="navbar-nav">
+									<li class="nav-item"><a class="nav-link"
+										href="/team/index.do?id=<%=id%>">Home</a></li>
+									<li class="nav-item"><a class="nav-link"
+										href="/team/list.do?page=1&id=<%=id%>">상품목록</a></li>
+									<li class="nav-item"><a class="nav-link"
+										href="/team/communityList.do?id=<%=id%>">커뮤니티</a></li>
+
+								</ul>
+							</div>
+							<a href="#" class="btn_1 d-none d-lg-block">book now</a>
+						</nav>
+					</div>
+				</div>
+			</div>
+		</div>
 	</header>
 	<!-- Header part end-->
 
@@ -378,11 +384,12 @@ background-color
 	<section class="hotel_list section_padding single_page_hotel_list">
 		<div class="container">
 			<div class="row justify-content-center" style=""></div>
-			<span id="emptySpan" style="display:none; text-align:center"><h1>상품 목록이 없습니다.</h1></span>
-			<div class="row" >
+			<span id="emptySpan" style="display: none; text-align: center"><h1>상품
+					목록이 없습니다.</h1></span>
+			<div class="row">
 				<%
-					if(pList!=null){	
-																for (int i = 0; i < pList.size(); i++) {
+					if (pList != null) {
+						for (int i = 0; i < pList.size(); i++) {
 				%>
 				<!-- 목록 -->
 				<div class="col-lg-4 col-sm-6" style="">
@@ -390,36 +397,40 @@ background-color
 					<div class="single_ihotel_list">
 						<!-- 개별상품 -->
 						<img
-							src="/team/semiupload/<%=pList!=null?pList.get(i).getPfilename():""%>"
+							src="/team/semiupload/<%=pList != null ? pList.get(i).getPfilename() : ""%>"
 							alt="<%=pList.get(i).getPfilename()%>" width=300 height=300>
-						
+
 						<div class="hotel_text_iner">
 							<h3>
-								<a href="/team/info.do?id=<%=id%>&pno=<%=pList.get(i).getPno()%>"> <%=pList.get(i).getPname()%></a>
+								<a
+									href="/team/info.do?id=<%=id%>&pno=<%=pList.get(i).getPno()%>">
+									<%=pList.get(i).getPname()%></a>
 							</h3>
 							<div class="place_review">
-							<%
-								int grade = 0;
-																																					try{
-																																					grade = sungsuDao.anSelectGradeFromPno(pList.get(i).getPno()); 
-																																					}catch(Exception e){
-																																						
-																																					}
-																																					
-																																					for(int var = 0 ; var < grade; var++){
-							%>
-								<a href="#"><i class="fas fa-star"></i></a> 
 								<%
- 									}
- 								 								 								 								 								 													int last = 5-grade;
- 								 								 								 								 								 													for(int var = 0;var<last;var++){
- 								%>							
-								<a href="#"><i class="far fa-star"></i></a> 
-																													
+									int grade = 0;
+											try {
+												grade = sungsuDao.anSelectGradeFromPno(pList.get(i).getPno());
+											} catch (Exception e) {
+
+											}
+
+											for (int var = 0; var < grade; var++) {
+								%>
+								<a href="#"><i class="fas fa-star"></i></a>
 								<%
- 																																						}
- 																																					%> 
-								<span>(<%=sungsuDao.anSelectReviewCountFromPno(pList.get(i).getPno())%> review)</span>
+									}
+											int last = 5 - grade;
+											for (int var = 0; var < last; var++) {
+								%>
+								<a href="#"><i class="far fa-star"></i></a>
+
+								<%
+									}
+								%>
+								<span>(<%=sungsuDao.anSelectReviewCountFromPno(pList.get(i).getPno())%>
+									review)
+								</span>
 							</div>
 							<p>
 								판매처 :
@@ -438,13 +449,13 @@ background-color
 				</div>
 				<%
 					}
-									}
+					}
 				%>
 
-			
-	
 
-		<%-- <%
+
+
+				<%-- <%
 			String agegroup = appleDao.selectAgeGroup(id);
 		%>
 		<%
@@ -454,13 +465,14 @@ background-color
 			 <%
               }
               %> --%>
-		<div id="floatMenu" class="col-lg-4 col-sm-6" style="float:right;display:inline-block">
-			
-				<br>
-				<ul style="text-align: center; color: gray;">
-				<li>상품추천</li>
-				<br>
-				<%-- <%
+				<div id="floatMenu" class="col-lg-4 col-sm-6"
+					style="float: right; display: inline-block">
+
+					<br>
+					<ul style="text-align: center; color: gray;">
+						<li>상품추천</li>
+						<br>
+						<%-- <%
 				
 					ArrayList<SemiProductBean> list = (ArrayList<SemiProductBean>) appleDao
 							.selectPreferProductFromAge(agegroup);
@@ -475,23 +487,23 @@ background-color
 				}
 				%>  성수 나중에 수정 할 예정   --%>
 
-              <%
-              	List<SemiProductBean>list = taehoonDao.selectTop4();
-                                            SemiProductBean bean = list.get(0);
-              %>
-              <li>예약 TOP1</li>
-              <li><%=bean.getPname() %></li>
-              <img src="/team/semiupload/<%=bean.getPfilename() %>"/>
-              
-              
-             
+						<%
+							List<SemiProductBean> list = taehoonDao.selectTop4();
+							SemiProductBean bean = list.get(0);
+						%>
+						<li>예약 TOP1</li>
+						<li><%=bean.getPname()%></li>
+						<img src="/team/semiupload/<%=bean.getPfilename()%>" />
 
 
-			</ul>
 
-		</div>
-		</div>
+
+
+					</ul>
+
+				</div>
 			</div>
+		</div>
 	</section>
 	<!-- about us css end-->
 
@@ -508,7 +520,7 @@ background-color
 			<%
 				}
 			%>
-			
+
 
 			<%
 				for (int i = startPage; i <= endPage; i++) {
@@ -622,7 +634,9 @@ background-color
 		</div>
 	</footer>
 	<!-- footer part end-->
-<a style="display:scroll;position:fixed;bottom:40px;right:10px; width:50px; height:50px" href="#" title=”맨위로"><img src="/team/semiupload/img_top.png"></a>
+	<a
+		style="display: scroll; position: fixed; bottom: 40px; right: 10px; width: 50px; height: 50px"
+		href="#" title=”맨위로"><img src="/team/semiupload/img_top.png"></a>
 
 	<!-- jquery plugins here-->
 	<script src="js/jquery-1.12.1.min.js"></script>
