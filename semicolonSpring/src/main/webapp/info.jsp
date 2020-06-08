@@ -368,9 +368,9 @@
 		    			<li><a href="#">평점높은순</a></li>
 		    			<li><a href="#">평점낮은순</a></li>
 		    			<li><a href="#"><img src="/team/semiupload/good.png" width="20" height="20"></a></li>
-		    			<li><a href="#"></a>0</li> <!-- 좋아요 -->
+		    			<li><a href="#"></a>0</li>  <!-- 좋아요 -->
 		    			<li><a href="#"><img src="/team/semiupload/bad.png" width="20" height="20"></a></li>
-		    			<li><a href="#"></a>0</li> <!-- 싫어요 -->
+		    			<li><a href="#"></a>0</li>  <!-- 싫어요 -->
 		    			
 		    			
 		    		</ul>

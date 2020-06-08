@@ -729,7 +729,6 @@ public class SemiController {
 		model.addAttribute("myPageDao", myPageDao);
 		return "index";
 	}
-	//
 	
 	@RequestMapping(value = "adminProductList.do")
 	public String adminProductListFunc(HttpServletRequest request, HttpServletResponse response, Model model) {
