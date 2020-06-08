@@ -8,6 +8,7 @@ import org.mybatis.spring.support.SqlSessionDaoSupport;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import semicolon.com.bean.GoodOrBadBean;
 import semicolon.com.bean.SemiCompanyBean;
 import semicolon.com.bean.SemiList1;
 import semicolon.com.bean.SemiMemberBean;
@@ -76,6 +77,15 @@ public class TaehoonDao extends SqlSessionDaoSupport{
 	public List<SemiProductBean> selectTop4() {
 	    return this.getSqlSession().selectList("selectTop4");         
     }
+	public int selemyGood(GoodOrBadBean gob) {
+		return this.getSqlSession().selectOne("selemyGood", gob);
+	}
+	public int selemyBad(GoodOrBadBean gob) {
+		return this.getSqlSession().selectOne("selemyBad", gob);
+	}
+	public void insertGood() {
+		this.getSqlSession().insert("insertGood");
+	}
 	
 }
 

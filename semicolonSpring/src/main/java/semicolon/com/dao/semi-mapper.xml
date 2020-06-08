@@ -540,6 +540,17 @@ INSERT INTO SEMIMEMBER VALUES
 (#{id},#{name},#{nickname},#{password},#{gender},#{tel},#{birthdate},#{email},#{address})
 </insert>
 
+<select id="selemyGood" parameterType="semicolon.com.bean.GoodOrBadBean" resultType="java.lang.Integer">
+SELECT GOOD
+FROM GOBFUN
+WHERE ID=#{id} AND NO=#{no}
+</select>
+
+<select id="selemyBad" parameterType="semicolon.com.bean.GoodOrBadBean" resultType="java.lang.Integer">
+SELECT BAD
+FROM GOBFUN
+WHERE ID=#{id} AND NO=#{no}
+</select>
 
 <!-- /태훈 -->
 

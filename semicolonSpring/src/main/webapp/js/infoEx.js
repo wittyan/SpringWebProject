@@ -37,10 +37,32 @@ $(function(){
 		 });
 		 
 		 
-		 
-		 
+	
+		 $("a#like").click(function(){
+			var myId = this.lang;
+			var check = $("input#mygood").val();
+			if(chek==0){
+				godOrbad(myId,"plusG");
+			}else{
+				godOrbad(myId,"minusG");
+			}
+			
+		 });
 		 
 		 
 		 
 });
 
+function godOrbad(id,action){
+	$.ajax({
+		url:"/team/gogoGood.do",
+		dataType:"text",
+		Type:"POST",
+		data:{no:id,action:action},
+		success:function(v){
+			
+		},error:function(){
+			alert('error');
+		}
+	});//ajax
+}

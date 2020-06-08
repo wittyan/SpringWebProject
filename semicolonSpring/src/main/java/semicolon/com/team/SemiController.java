@@ -22,6 +22,7 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import com.sun.xml.bind.v2.schemagen.xmlschema.List;
 
+import semicolon.com.bean.GoodOrBadBean;
 import semicolon.com.bean.PageBean;
 import semicolon.com.bean.SemiEventBean;
 import semicolon.com.bean.SemiNoticeBean;
@@ -751,14 +752,26 @@ public class SemiController {
 	}
 
 	@RequestMapping(value = "info.do")
-	public String infoFunc(HttpServletRequest request, HttpServletResponse response, Model model) {
-		
+	public String infoFunc(GoodOrBadBean gob,int no,HttpServletRequest request, HttpServletResponse response, Model model, HttpSession session) {
+		String id = (String)session.getAttribute("id");
 		model.addAttribute("sungsuDao", Sdao);
 		model.addAttribute("appleDao", Adao);
 		model.addAttribute("taehoonDao", tdao);
 		model.addAttribute("suyeonSemiDao", suyeonSemiDao);
 		model.addAttribute("addressDao", addressDao);
 		model.addAttribute("myPageDao", myPageDao);
+		
+		gob.setId(id);
+		gob.setNo(no);
+		
+		try {
+			model.addAttribute("mygood", tdao.selemyGood(gob));
+			model.addAttribute("mybad", tdao.selemyBad(gob));
+		} catch (Exception e) {
+			model.addAttribute("mygood", 0);
+			model.addAttribute("mybad", 0);
+		}
+		
 		
 		return "info";
 	}
