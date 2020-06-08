@@ -29,7 +29,7 @@ TaehoonDao taehoonDao = (TaehoonDao) request.getAttribute("taehoonDao");
 
    //out.println(member);
     taehoonDao.insertMember(member);
-    out.println("<script>alert('회원가입 되었습니다'); location.href='loginMain.do';</script>");
+    out.println("<script>alert('회원가입 되었습니다'); location.href='loginFun.do';</script>");
   
 %>
 
