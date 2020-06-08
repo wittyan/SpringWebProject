@@ -68,7 +68,7 @@ public class SemiController {
 	@Resource
 	MyPageDao myPageDao;
 	
-	String locations = "C:\\Users\\premi\\git\\repository\\semicolonSpring\\src\\main\\webapp\\semiupload\\";
+	String locations = "C:\\Users\\user\\git\\semicoloweb\\semicolonSpring\\src\\main\\webapp\\semiupload\\";
 //	ActionFactory부분을 Spring으로 구현
 
 	@RequestMapping(value = { "sProAction.do", "selectProFun.do", "comName.do", "selemblt.do", "selemblt2.do",
