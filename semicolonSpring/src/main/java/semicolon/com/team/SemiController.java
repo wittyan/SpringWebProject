@@ -69,7 +69,7 @@ public class SemiController {
 	MyPageDao myPageDao;
 	
 	String locations = "C:\\Users\\user\\git\\semicoloweb\\semicolonSpring\\src\\main\\webapp\\semiupload\\";
-//	ActionFactoryºÎºÐÀ» SpringÀ¸·Î ±¸Çö
+//	ActionFactoryï¿½Îºï¿½ï¿½ï¿½ Springï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 
 	@RequestMapping(value = { "sProAction.do", "selectProFun.do", "comName.do", "selemblt.do", "selemblt2.do",
 			"comList.do", "seleme.do", "modCompany.do", "proList.do", "modProduct.do" ,"companyList.do"})
@@ -276,7 +276,7 @@ public class SemiController {
 	public String eventFormFunc(Model model, HttpServletRequest request) {
 
 		/*
-		 * type = ±ÛÀÌ µé¾î°¥ °Ô½ÃÆÇ mode = new, reply, modify pageData = µ¹¾Æ°¥ page
+		 * type = ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½î°¥ ï¿½Ô½ï¿½ï¿½ï¿½ mode = new, reply, modify pageData = ï¿½ï¿½ï¿½Æ°ï¿½ page
 		 */
 		String type = request.getParameter("type");
 		String mode = request.getParameter("mode");
@@ -314,7 +314,7 @@ public class SemiController {
 			e.printStackTrace();
 		}
 		/*
-		 * type = ±ÛÀÌ µé¾î°¥ °Ô½ÃÆÇ mode = new, reply, modify pageData = µ¹¾Æ°¥ page
+		 * type = ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½î°¥ ï¿½Ô½ï¿½ï¿½ï¿½ mode = new, reply, modify pageData = ï¿½ï¿½ï¿½Æ°ï¿½ page
 		 */
 		String type = request.getParameter("type");
 		String mode = request.getParameter("mode");
@@ -369,7 +369,7 @@ public class SemiController {
 	public String noticeFomrFunc(HttpServletRequest request, Model model) {
 
 		/*
-		 * type = ±ÛÀÌ µé¾î°¥ °Ô½ÃÆÇ mode = new, reply, modify pageData = µ¹¾Æ°¥ page
+		 * type = ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½î°¥ ï¿½Ô½ï¿½ï¿½ï¿½ mode = new, reply, modify pageData = ï¿½ï¿½ï¿½Æ°ï¿½ page
 		 */
 		String type = request.getParameter("type");
 		String mode = request.getParameter("mode");
@@ -414,7 +414,7 @@ public class SemiController {
 
 		if (type.equals("qna")) {
 			Adao.deleteQna(no);
-			/* ºÎ¸ðÀÇ REPLY°ª º¯È­ */
+			/* ï¿½Î¸ï¿½ï¿½ï¿½ REPLYï¿½ï¿½ ï¿½ï¿½È­ */
 			HashMap<String, Object> map = new HashMap<String, Object>();
 			map.put("num", request.getParameter("pno"));
 			map.put("mode", "del");
@@ -450,7 +450,7 @@ public class SemiController {
 
 		} else {
 
-			/* °Ô½ÃÆÇº° ºÐ±â */
+			/* ï¿½Ô½ï¿½ï¿½Çºï¿½ ï¿½Ð±ï¿½ */
 			if (type.equals("qna")) {
 				SemiQnaBean qnaBean = new SemiQnaBean();
 
@@ -509,11 +509,11 @@ public class SemiController {
 					// updateReply
 					HashMap<String, Object> map = new HashMap<String, Object>();
 
-					/* ºÎ¸ðÀÇ REPLY°ª º¯È­ */
+					/* ï¿½Î¸ï¿½ï¿½ï¿½ REPLYï¿½ï¿½ ï¿½ï¿½È­ */
 					map.put("num", qnaBean.getPnum());
 					map.put("mode", "reply");
 
-					/* refµéÀÇ stepº¯È­ */
+					/* refï¿½ï¿½ï¿½ï¿½ stepï¿½ï¿½È­ */
 					map.put("ref", qnaBean.getRef());
 
 					map.put("step", qnaBean.getStep());
@@ -655,7 +655,7 @@ public class SemiController {
 			seb = (SemiEventBean) Adao.eventInfo(no);
 		}
 
-		/* ID°¡Á®¿À±â */
+		/* IDï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ */
 		String id = (String) request.getSession().getAttribute("id");
 
 		model.addAttribute("id", id);
@@ -729,6 +729,7 @@ public class SemiController {
 		model.addAttribute("myPageDao", myPageDao);
 		return "index";
 	}
+	//
 	
 	@RequestMapping(value = "adminProductList.do")
 	public String adminProductListFunc(HttpServletRequest request, HttpServletResponse response, Model model) {
