@@ -2,12 +2,15 @@ package semicolon.com.team;
 
 import javax.annotation.Resource;
 import javax.inject.Inject;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
+import semicolon.com.bean.GoodOrBadBean;
 import semicolon.com.dao.APListDao;
 import semicolon.com.dao.AddressDao;
 import semicolon.com.dao.AppleDao;
@@ -45,9 +48,27 @@ public class TaehoonController {
 	MyPageDao myPageDao;
 	
 	@RequestMapping(value = "gogoGood.do")
-	public String testGood(Model model,HttpSession session) {
+	public String testGood(GoodOrBadBean gob,Model model,HttpSession session,int no, String action,HttpServletRequest request) {
 		String id = (String)session.getAttribute("id");
-		return "";
+		//String id = request.getParameter("id");
+		gob.setId(id);
+		gob.setNo(no);
+		System.out.println(id+" : "+action+" : "+no);
+		
+		if(action.equals("plusG")) {
+			tdao.deleteGoodandBad(gob);
+			tdao.insertGood(gob);
+			return "redirect:/team/info.do";
+		}else if(action.equals("minus")) {
+			tdao.deleteGoodandBad(gob);
+			return "redirect:/team/info.do";
+		}else if(action.equals("plusB")) {
+			tdao.deleteGoodandBad(gob);
+			tdao.insertBad(gob);
+			return "redirect:/team/info.do";
+		}
+		
+		return "redirect:/team/info.do";
 	}
 	
 }

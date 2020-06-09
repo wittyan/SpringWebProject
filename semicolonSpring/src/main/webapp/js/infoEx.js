@@ -41,28 +41,38 @@ $(function(){
 		 $("a#like").click(function(){
 			var myId = this.lang;
 			var check = $("input#mygood").val();
-			if(chek==0){
+			if(check==0){
 				godOrbad(myId,"plusG");
 			}else{
-				godOrbad(myId,"minusG");
+				godOrbad(myId,"minus");
 			}
 			
+		 });
+		 $("a#hate").click(function(){
+			 var myId = this.lang;
+		     var check = $("input#mybad").val();
+			 if(check==0){
+				godOrbad(myId,"plusB");
+			}else{
+				godOrbad(myId,"minus");
+			}
+			 
 		 });
 		 
 		 
 		 
 });
 
-function godOrbad(id,action){
+function godOrbad(myId,action){
 	$.ajax({
 		url:"/team/gogoGood.do",
 		dataType:"text",
 		Type:"POST",
-		data:{no:id,action:action},
+		data:{no:myId,action:action},
 		success:function(v){
-			
+			location.reload();
 		},error:function(){
-			alert('error');
+			location.reload();
 		}
 	});//ajax
 }

@@ -752,8 +752,10 @@ public class SemiController {
 	}
 
 	@RequestMapping(value = "info.do")
-	public String infoFunc(GoodOrBadBean gob,int no,HttpServletRequest request, HttpServletResponse response, Model model, HttpSession session) {
-		String id = (String)session.getAttribute("id");
+	public String infoFunc(GoodOrBadBean gob,HttpServletRequest request, HttpServletResponse response, Model model, HttpSession session) {
+		//String id = (String)session.getAttribute("id");
+		String id = request.getParameter("id");
+		int no = Integer.parseInt(request.getParameter("pno"));
 		model.addAttribute("sungsuDao", Sdao);
 		model.addAttribute("appleDao", Adao);
 		model.addAttribute("taehoonDao", tdao);
@@ -771,6 +773,15 @@ public class SemiController {
 			model.addAttribute("mygood", 0);
 			model.addAttribute("mybad", 0);
 		}
+		
+		try {
+			model.addAttribute("allGood", tdao.selectAllGood(no));
+			model.addAttribute("allBad", tdao.selectAllBad(no));
+		} catch (Exception e) {
+			model.addAttribute("allGood", 0);
+			model.addAttribute("allBad", 0);
+		}
+		
 		
 		
 		return "info";

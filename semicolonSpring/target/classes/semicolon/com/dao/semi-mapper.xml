@@ -552,6 +552,35 @@ FROM GOBFUN
 WHERE ID=#{id} AND NO=#{no}
 </select>
 
+<insert id="insertGood" parameterType="semicolon.com.bean.GoodOrBadBean">
+INSERT INTO GOBFUN
+VALUES(#{id},#{no},1,0)
+</insert>
+
+<insert id="insertBad" parameterType="semicolon.com.bean.GoodOrBadBean">
+INSERT INTO GOBFUN
+VALUES(#{id},#{no},0,1)
+</insert>
+
+<delete id="deleteGoodandBad" parameterType="semicolon.com.bean.GoodOrBadBean">
+DELETE FROM GOBFUN
+WHERE ID=#{id} AND NO=#{no}
+</delete>
+
+<select id="selectAllGood" parameterType="java.lang.Integer" resultType="java.lang.Integer">
+SELECT SUM(GOOD)
+FROM GOBFUN
+WHERE NO=#{no}
+</select>
+
+<select id="selectAllBad" parameterType="java.lang.Integer" resultType="java.lang.Integer">
+SELECT SUM(BAD)
+FROM GOBFUN
+WHERE NO=#{no}
+</select>
+
+
+
 <!-- /태훈 -->
 
 

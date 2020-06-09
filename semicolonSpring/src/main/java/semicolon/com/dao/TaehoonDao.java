@@ -83,10 +83,21 @@ public class TaehoonDao extends SqlSessionDaoSupport{
 	public int selemyBad(GoodOrBadBean gob) {
 		return this.getSqlSession().selectOne("selemyBad", gob);
 	}
-	public void insertGood() {
-		this.getSqlSession().insert("insertGood");
+	public void insertGood(GoodOrBadBean gob) {
+		this.getSqlSession().insert("insertGood",gob);
 	}
-	
+	public void insertBad(GoodOrBadBean gob) {
+		this.getSqlSession().insert("insertBad",gob);
+	}
+	public void deleteGoodandBad(GoodOrBadBean gob) {
+		this.getSqlSession().delete("deleteGoodandBad",gob);
+	}
+	public int selectAllGood(int no) {
+		return this.getSqlSession().selectOne("selectAllGood",no);
+	}
+	public int selectAllBad(int no) {
+		return this.getSqlSession().selectOne("selectAllBad",no);
+	}
 }
 
 
