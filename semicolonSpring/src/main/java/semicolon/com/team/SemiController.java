@@ -5,6 +5,7 @@ import java.io.FileOutputStream;
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 import javax.annotation.PostConstruct;
 import javax.annotation.Resource;
@@ -20,7 +21,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
-import com.sun.xml.bind.v2.schemagen.xmlschema.List;
 
 import semicolon.com.bean.GoodOrBadBean;
 import semicolon.com.bean.PageBean;
@@ -51,6 +51,10 @@ public class SemiController {
 	public static APListDao stAplistdao;
 	public static AddressDao stAddressdao;
 	public static MyPageDao stmyPageDao;
+	
+	
+	ArrayList<SemiProductBean> goodList;
+	
 	@Inject
 	TaehoonDao tdao;
 	@Resource
@@ -70,7 +74,7 @@ public class SemiController {
 	MyPageDao myPageDao;
 	
 	String locations = "C:\\Users\\user\\git\\semicoloweb\\semicolonSpring\\src\\main\\webapp\\semiupload\\";
-//	ActionFactory�κ��� Spring���� ����
+//	ActionFactory占싸븝옙占쏙옙 Spring占쏙옙占쏙옙 占쏙옙占쏙옙
 
 	@RequestMapping(value = { "sProAction.do", "selectProFun.do", "comName.do", "selemblt.do", "selemblt2.do",
 			"comList.do", "seleme.do", "modCompany.do", "proList.do", "modProduct.do" ,"companyList.do"})
@@ -93,6 +97,7 @@ public class SemiController {
 		}
 	}
 
+	
 	@PostConstruct
 	private void initStaticDao() {
 		stAdao = this.Adao;
@@ -102,8 +107,14 @@ public class SemiController {
 		stAplistdao = this.apListdao;
 		stAddressdao = this.addressDao;
 		stmyPageDao = this.myPageDao;
+		
+		
 	}
 
+	public void getgoodList(Model model,String id) {
+		 model.addAttribute("goodList",id!=null?Sdao.goodList(id):null);
+		
+	}
 	
 	@RequestMapping(value = "admincontrolMain.do")
 	public String admincontrolMain() {
@@ -277,7 +288,7 @@ public class SemiController {
 	public String eventFormFunc(Model model, HttpServletRequest request) {
 
 		/*
-		 * type = ���� �� �Խ��� mode = new, reply, modify pageData = ���ư� page
+		 * type = 占쏙옙占쏙옙 占쏙옙載� 占쌉쏙옙占쏙옙 mode = new, reply, modify pageData = 占쏙옙占싣곤옙 page
 		 */
 		String type = request.getParameter("type");
 		String mode = request.getParameter("mode");
@@ -315,7 +326,7 @@ public class SemiController {
 			e.printStackTrace();
 		}
 		/*
-		 * type = ���� �� �Խ��� mode = new, reply, modify pageData = ���ư� page
+		 * type = 占쏙옙占쏙옙 占쏙옙載� 占쌉쏙옙占쏙옙 mode = new, reply, modify pageData = 占쏙옙占싣곤옙 page
 		 */
 		String type = request.getParameter("type");
 		String mode = request.getParameter("mode");
@@ -370,7 +381,7 @@ public class SemiController {
 	public String noticeFomrFunc(HttpServletRequest request, Model model) {
 
 		/*
-		 * type = ���� �� �Խ��� mode = new, reply, modify pageData = ���ư� page
+		 * type = 占쏙옙占쏙옙 占쏙옙載� 占쌉쏙옙占쏙옙 mode = new, reply, modify pageData = 占쏙옙占싣곤옙 page
 		 */
 		String type = request.getParameter("type");
 		String mode = request.getParameter("mode");
@@ -415,7 +426,7 @@ public class SemiController {
 
 		if (type.equals("qna")) {
 			Adao.deleteQna(no);
-			/* �θ��� REPLY�� ��ȭ */
+			/* 占싸몌옙占쏙옙 REPLY占쏙옙 占쏙옙화 */
 			HashMap<String, Object> map = new HashMap<String, Object>();
 			map.put("num", request.getParameter("pno"));
 			map.put("mode", "del");
@@ -451,7 +462,7 @@ public class SemiController {
 
 		} else {
 
-			/* �Խ��Ǻ� �б� */
+			/* 占쌉쏙옙占실븝옙 占싻깍옙 */
 			if (type.equals("qna")) {
 				SemiQnaBean qnaBean = new SemiQnaBean();
 
@@ -510,11 +521,11 @@ public class SemiController {
 					// updateReply
 					HashMap<String, Object> map = new HashMap<String, Object>();
 
-					/* �θ��� REPLY�� ��ȭ */
+					/* 占싸몌옙占쏙옙 REPLY占쏙옙 占쏙옙화 */
 					map.put("num", qnaBean.getPnum());
 					map.put("mode", "reply");
 
-					/* ref���� step��ȭ */
+					/* ref占쏙옙占쏙옙 step占쏙옙화 */
 					map.put("ref", qnaBean.getRef());
 
 					map.put("step", qnaBean.getStep());
@@ -656,7 +667,7 @@ public class SemiController {
 			seb = (SemiEventBean) Adao.eventInfo(no);
 		}
 
-		/* ID�������� */
+		/* ID占쏙옙占쏙옙占쏙옙占쏙옙 */
 		String id = (String) request.getSession().getAttribute("id");
 
 		model.addAttribute("id", id);
@@ -722,6 +733,9 @@ public class SemiController {
 	@RequestMapping(value = "index.do")
 	public String indexFunc(HttpServletRequest request, HttpServletResponse response, Model model) {
 
+		
+		getgoodList(model, (String)request.getSession().getAttribute("id"));
+		
 		model.addAttribute("sungsuDao", Sdao);
 		model.addAttribute("appleDao", Adao);
 		model.addAttribute("taehoonDao", tdao);

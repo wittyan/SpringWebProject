@@ -23,7 +23,7 @@
 	SuyeonSemiDao suyeonSemiDao = (SuyeonSemiDao) request.getAttribute("suyeonSemiDao");
 	AddressDao addressDao = (AddressDao) request.getAttribute("addressDao");
 	MyPageDao myPageDao = (MyPageDao) request.getAttribute("myPageDao");
-	
+
 	//        String id = request.getParameter("id");
 	List<SemiProductBean> list = taehoonDao.selectTop4();
 	//out.println(list);
@@ -84,7 +84,6 @@
 <script type="text/javascript"></script>
 <script src="/team/js/index.js" charset="UTF-8"></script>
 <script type="text/javascript">
-
 	
 </script>
 <head>
@@ -115,6 +114,7 @@
 <link rel="stylesheet" href="/team/css/slick.css">
 <!-- style CSS -->
 <link rel="stylesheet" href="/team/css/style.css">
+<link rel="stylesheet" href="/team/css/cart.css">
 
 </head>
 
@@ -130,21 +130,24 @@
 				<div class="col-lg-6 col-sm-12 col-md-6">
 					<div class="sub_menu_right_content">
 
-						
+
 						<c:choose>
-						<c:when test="${id ne null}">
-						<span>${id }님 안녕하세요</span> <a href="loginMain.jsp">로그아웃</a> <a
-							href="myInfo.do?id=${id }">마이 페이지</a>
-						<c:if test="${id eq 'admin'}">
-						<a href="admincontrolMain.do">관리자페이지</a>
-						</c:if>
-						</c:when>
-						<c:otherwise>
-						
-						<span>비회원</span> <a href="loginMain.jsp">로그인</a> <a href="#">마이
-							페이지</a> <a href="mypage.do"></a>
-						
-						</c:otherwise>
+							<c:when test="${id ne null}">
+								<span>${id }님 안녕하세요</span>
+								<a href="logout.do">로그아웃</a>
+								<a href="myInfo.do?id=${id }">마이 페이지</a>
+								<c:if test="${id eq 'admin'}">
+									<a href="admincontrolMain.do">관리자페이지</a>
+								</c:if>
+							</c:when>
+							<c:otherwise>
+
+								<span>비회원</span>
+								<a href="loginMain.jsp">로그인</a>
+								<a href="#">마이 페이지</a>
+								<a href="mypage.do"></a>
+
+							</c:otherwise>
 						</c:choose>
 					</div>
 				</div>
@@ -181,13 +184,37 @@
 
 								</ul>
 							</div>
-							<a href="#" class="btn_1 d-none d-lg-block">book now</a>
+							<section id="content">
+								<details class="shoppingCart">
+									<summary>
+										<h4 style="font-family: 함초롬돋움">찜한 목록</h4>
+										<span class="arrow"></span>
+									</summary>
+									<ul>
+										<c:if test="${goodList ne null }">
+											<c:forEach var="i" items="${goodList }" varStatus="count">
+
+											<li><span><a href="javascript:void(0);">${i.pname }</a></span>
+												<strong> &#8361;${i.pPrice }</strong></li>
+											</c:forEach>
+										</c:if>
+									</ul>
+<!-- 									<p> -->
+<!-- 										<span>Products: <strong>8</strong></span> <span>Total: -->
+<!-- 											<strong>&euro;78,40</strong> -->
+<!-- 										</span> -->
+<!-- 									</p> -->
+<!-- 									<a class="checkout" href="javascript:void(0);">Checkout</a> -->
+								</details>
+							</section>
 						</nav>
+
 					</div>
 				</div>
 			</div>
 		</div>
 	</header>
+
 	<!-- Header part end-->
 
 	<!-- banner part start-->
@@ -593,7 +620,8 @@
 			</div>
 		</div>
 	</footer>
-	<!-- footer part end-->    	<!-- footer part start-->
+	<!-- footer part end-->
+	<!-- footer part start-->
 	<footer class="footer-area">
 		<div class="container">
 			<div class="row justify-content-between">
@@ -656,7 +684,9 @@
 		</div>
 	</footer>
 	<!-- footer part end-->
-	<a style="display:scroll;position:fixed;bottom:40px;right:10px; width:50px; height:50px" href="#" title=”맨위로"><img src="/team/semiupload/img_top.png"></a>
+	<a
+		style="display: scroll; position: fixed; bottom: 40px; right: 10px; width: 50px; height: 50px"
+		href="#" title=”맨위로"><img src="/team/semiupload/img_top.png"></a>
 
 	<!-- jquery plugins here-->
 	<script src="/team/js/jquery-1.12.1.min.js"></script>

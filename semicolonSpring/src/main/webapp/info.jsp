@@ -153,7 +153,7 @@
 						
 						<c:choose>
 						<c:when test="${id ne null}">
-						<span>${id }님 안녕하세요</span> <a href="loginMain.jsp">로그아웃</a> <a
+						<span>${id }님 안녕하세요</span> <a href="logout.do">로그아웃</a> <a
 							href="myInfo.do?id=${id }">마이 페이지</a>
 						<c:if test="${id eq 'admin'}">
 						<a href="admincontrolMain.do">관리자페이지</a>

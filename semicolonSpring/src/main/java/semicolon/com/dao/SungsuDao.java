@@ -25,6 +25,9 @@ public class SungsuDao extends SqlSessionDaoSupport{
 		this.setSqlSessionTemplate(st);
 	}
 	
+	public List<SemiProductBean> goodList(String str){
+		return this.getSqlSession().selectList("goodList", str);
+	}
 	public SemiProductBean anselectProductFromCno(Integer cno) {
 			return this.getSqlSession().selectOne("anselectProductFromCno", cno);
 	}

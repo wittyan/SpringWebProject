@@ -5,6 +5,13 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 <mapper namespace="semicolon.com.bean">
   <!--************************  성수 ************************-->
 
+<select id="goodList" parameterType="String" resultType="semicolon.com.bean.SemiProductBean">
+SELECT p.pno, p.cno, p.pname, p.pprice, p.ptype, p.pfilename, p.pstock
+FROM GOBFUN g , SEMIPRODUCT p
+WHERE g.no = p.pno AND ID=#{id} AND GOOD = 1
+</select>
+
+
 <select id="anSelectProductFromPno" parameterType="int" resultType="semicolon.com.bean.SemiProductBean">
 	SELECT *
 	FROM SEMIPRODUCT
@@ -539,6 +546,10 @@ WHERE RK BETWEEN 1 AND 4)
 INSERT INTO SEMIMEMBER VALUES
 (#{id},#{name},#{nickname},#{password},#{gender},#{tel},#{birthdate},#{email},#{address})
 </insert>
+
+
+
+
 
 <select id="selemyGood" parameterType="semicolon.com.bean.GoodOrBadBean" resultType="java.lang.Integer">
 SELECT GOOD
