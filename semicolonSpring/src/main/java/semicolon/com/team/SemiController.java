@@ -79,7 +79,7 @@ public class SemiController {
 	@RequestMapping(value = { "sProAction.do", "selectProFun.do", "comName.do", "selemblt.do", "selemblt2.do",
 			"comList.do", "seleme.do", "modCompany.do", "proList.do", "modProduct.do" ,"companyList.do"})
 	public String ActionFactory(String cmd, HttpServletRequest request, Model model) {
-
+		getgoodList(model, (String)request.getSession().getAttribute("id"));
 		try {
 			request.setCharacterEncoding("UTF-8");
 		} catch (UnsupportedEncodingException e) {
@@ -113,7 +113,6 @@ public class SemiController {
 
 	public void getgoodList(Model model,String id) {
 		 model.addAttribute("goodList",id!=null?Sdao.goodList(id):null);
-		
 	}
 	
 	@RequestMapping(value = "admincontrolMain.do")
@@ -131,7 +130,7 @@ public class SemiController {
 		String pass = tdao.loginIdCheckFun(id);
 		if (pass!=null && pass.equals(password)) {
 			session.setAttribute("id", id);
-			session.setMaxInactiveInterval(600);
+			session.setMaxInactiveInterval(1200);
 			return "redirect:/index.do";
 		}
 		return "loginMain";
@@ -155,6 +154,7 @@ public class SemiController {
 
 	@RequestMapping(value = "communityList.do")
 	public String communityListProcess(HttpServletRequest request, Model model) {
+		getgoodList(model, (String)request.getSession().getAttribute("id"));
 		try {
 			request.setCharacterEncoding("EUC-KR");
 		} catch (UnsupportedEncodingException e1) {
@@ -286,7 +286,7 @@ public class SemiController {
 
 	@RequestMapping(value = "eventForm.do")
 	public String eventFormFunc(Model model, HttpServletRequest request) {
-
+		getgoodList(model, (String)request.getSession().getAttribute("id"));
 		/*
 		 * type = 占쏙옙占쏙옙 占쏙옙載� 占쌉쏙옙占쏙옙 mode = new, reply, modify pageData = 占쏙옙占싣곤옙 page
 		 */
@@ -318,7 +318,7 @@ public class SemiController {
 
 	@RequestMapping(value = "qnaForm.do")
 	public String qnaFormFunc(HttpServletRequest request, Model model) {
-
+		getgoodList(model, (String)request.getSession().getAttribute("id"));
 		try {
 			request.setCharacterEncoding("UTF-8");
 		} catch (UnsupportedEncodingException e) {
@@ -379,7 +379,7 @@ public class SemiController {
 
 	@RequestMapping(value = "noticeForm.do")
 	public String noticeFomrFunc(HttpServletRequest request, Model model) {
-
+		getgoodList(model, (String)request.getSession().getAttribute("id"));
 		/*
 		 * type = 占쏙옙占쏙옙 占쏙옙載� 占쌉쏙옙占쏙옙 mode = new, reply, modify pageData = 占쏙옙占싣곤옙 page
 		 */
@@ -413,7 +413,7 @@ public class SemiController {
 
 	@RequestMapping(value = "delete.do")
 	public String communityDeleteProcess(HttpServletRequest request, Model model) {
-
+		getgoodList(model, (String)request.getSession().getAttribute("id"));
 		try {
 			request.setCharacterEncoding("EUC-KR");
 		} catch (UnsupportedEncodingException e) {
@@ -635,7 +635,8 @@ public class SemiController {
 
 	@RequestMapping(value = "qnaContents.do")
 	public String qnaContentsFunc(HttpServletRequest request, Model model) {
-
+		getgoodList(model, (String)request.getSession().getAttribute("id"));
+		
 		int no = Integer.parseInt(request.getParameter("no"));
 		String pageData = request.getParameter("page");
 		SemiQnaBean sqb = null;
@@ -655,7 +656,7 @@ public class SemiController {
 
 	@RequestMapping(value = "eventContents.do")
 	public String eventContentsFunc(HttpServletRequest request, Model model) {
-
+		getgoodList(model, (String)request.getSession().getAttribute("id"));
 		int no = 0;
 		if (request.getParameter("no") != null) {
 			no = Integer.parseInt(request.getParameter("no"));
@@ -680,7 +681,8 @@ public class SemiController {
 
 	@RequestMapping(value = "noticeContents.do")
 	public String noticeContentsFunc(HttpServletRequest request, Model model) {
-
+		getgoodList(model, (String)request.getSession().getAttribute("id"));
+		getgoodList(model, (String)request.getSession().getAttribute("id"));
 		int no = 5;
 		if (request.getParameter("no") != null) {
 			no = Integer.parseInt(request.getParameter("no"));
@@ -712,7 +714,7 @@ public class SemiController {
 
 	@RequestMapping(value = "list.do")
 	public String listFunc(HttpServletRequest request, Model model) {
-
+		getgoodList(model, (String)request.getSession().getAttribute("id"));
 		model.addAttribute("sungsuDao", Sdao);
 		model.addAttribute("appleDao", Adao);
 		model.addAttribute("taehoonDao", tdao);
@@ -747,7 +749,7 @@ public class SemiController {
 	
 	@RequestMapping(value = "adminProductList.do")
 	public String adminProductListFunc(HttpServletRequest request, HttpServletResponse response, Model model) {
-		
+		getgoodList(model, (String)request.getSession().getAttribute("id"));
 		model.addAttribute("sungsuDao", Sdao);
 		model.addAttribute("appleDao", Adao);
 		model.addAttribute("taehoonDao", tdao);
@@ -768,6 +770,8 @@ public class SemiController {
 	@RequestMapping(value = "info.do")
 	public String infoFunc(GoodOrBadBean gob,HttpServletRequest request, HttpServletResponse response, Model model, HttpSession session) {
 		//String id = (String)session.getAttribute("id");
+		
+		getgoodList(model, (String)request.getSession().getAttribute("id"));
 		String id = request.getParameter("id");
 		int no = Integer.parseInt(request.getParameter("pno"));
 		model.addAttribute("sungsuDao", Sdao);
@@ -802,7 +806,7 @@ public class SemiController {
 	}
 	@RequestMapping(value = "inforeserveProcess.do")
 	public String inforeserveProcessFunc(HttpServletRequest request, HttpServletResponse response, Model model) {
-		
+		getgoodList(model, (String)request.getSession().getAttribute("id"));
 		model.addAttribute("sungsuDao", Sdao);
 		model.addAttribute("appleDao", Adao);
 		model.addAttribute("taehoonDao", tdao);
@@ -819,7 +823,7 @@ public class SemiController {
 	}
 	@RequestMapping(value = "myReservation.do")
 	public String myReservationFunc(HttpServletRequest request, HttpServletResponse response, Model model) {
-		
+		getgoodList(model, (String)request.getSession().getAttribute("id"));
 		model.addAttribute("sungsuDao", Sdao);
 		model.addAttribute("appleDao", Adao);
 		model.addAttribute("taehoonDao", tdao);
@@ -831,7 +835,7 @@ public class SemiController {
 	}
 	@RequestMapping(value = "myInfoProcess.do")
 	public String myInfoProcessFunc(HttpServletRequest request, HttpServletResponse response, Model model) {
-		
+		getgoodList(model, (String)request.getSession().getAttribute("id"));
 	
 		model.addAttribute("myPageDao", myPageDao);
 		
@@ -840,7 +844,7 @@ public class SemiController {
 	
 	@RequestMapping(value = "myInfo.do")
 	public String myInfo(HttpServletRequest request, HttpServletResponse response, Model model) {
-		
+		getgoodList(model, (String)request.getSession().getAttribute("id"));
 		
 		model.addAttribute("myPageDao", myPageDao);
 		
@@ -856,13 +860,21 @@ public class SemiController {
 	}
 	@RequestMapping(value = "registerProduct.do")
 	public String registerProductFunc(HttpServletRequest request, HttpServletResponse response, Model model) {
-		
+		getgoodList(model, (String)request.getSession().getAttribute("id"));
 		model.addAttribute("appleDao", Adao);
 		
 		return "registerProduct";
 	}
+	@RequestMapping(value = "registerCompay.do")
+	public String registerCompayFunc(HttpServletRequest request, HttpServletResponse response, Model model) {
+		getgoodList(model, (String)request.getSession().getAttribute("id"));
+		model.addAttribute("appleDao", Adao);
+		
+		return "registerCompay";
+	}
 	@RequestMapping(value = "registerReview.do")
 	public String registerReviewFunc(@RequestParam(value="rvfilename",required=false)MultipartFile file ,HttpServletRequest request, HttpServletResponse response, Model model) {
+		
 		try {
 			request.setCharacterEncoding("UTF-8");
 		} catch (UnsupportedEncodingException e1) {
@@ -912,7 +924,7 @@ public class SemiController {
 	}
 	@RequestMapping(value = "signup.do")
 	public String signupFunc(HttpServletRequest request, HttpServletResponse response, Model model) {
-		
+		getgoodList(model, (String)request.getSession().getAttribute("id"));
 		model.addAttribute("taehoonDao", tdao);
 		
 		return "signup";
@@ -928,7 +940,7 @@ public class SemiController {
 	
 	@RequestMapping(value = "memberList.do")
 	public String memberListFunc(HttpServletRequest request, HttpServletResponse response, Model model) {
-		
+		getgoodList(model, (String)request.getSession().getAttribute("id"));
 		model.addAttribute("sungsuDao", Sdao);
 		model.addAttribute("appleDao", Adao);
 		model.addAttribute("taehoonDao", tdao);
@@ -962,6 +974,8 @@ public class SemiController {
 	}
 	@RequestMapping(value="caddress.do")
 	public String cadressFunc(HttpServletRequest request,Model model) {
+		
+		
 		try {
 			request.setCharacterEncoding("utf-8");
 		} catch (UnsupportedEncodingException e) {

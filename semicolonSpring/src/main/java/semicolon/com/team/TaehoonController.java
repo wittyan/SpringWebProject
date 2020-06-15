@@ -33,7 +33,6 @@ public class TaehoonController {
 	TaehoonDao tdao;
 	@Resource
 	AddressDao Adrdao;
-
 	@Resource
 	SungsuDao Sdao;
 	@Resource

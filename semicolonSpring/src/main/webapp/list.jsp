@@ -21,6 +21,7 @@
 	TaehoonDao taehoonDao = (TaehoonDao) request.getAttribute("taehoonDao");
 	SungsuDao sungsuDao = (SungsuDao) request.getAttribute("sungsuDao");
 
+			
 	request.setCharacterEncoding("EUC-KR");
 	String pageData = request.getParameter("page");
 
@@ -66,6 +67,8 @@
 	map.put("start", start);
 	map.put("end", end);
 	pList = (ArrayList<SemiProductBean>) appleDao.selectProduct(map);
+	
+	
 %>
 <head>
 <!-- Required meta tags -->

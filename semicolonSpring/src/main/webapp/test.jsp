@@ -11,6 +11,5 @@
    <c:if test="${functions:length(list) ne cnt.count }">
    ,
    </c:if>     
-
 </c:forEach>
 ]
