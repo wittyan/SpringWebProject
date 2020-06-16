@@ -773,7 +773,10 @@ public class SemiController {
 		
 		getgoodList(model, (String)request.getSession().getAttribute("id"));
 		String id = request.getParameter("id");
-		int no = Integer.parseInt(request.getParameter("pno"));
+		int no = 0;
+		if(request.getParameter("pno")!=null) {
+		no = Integer.parseInt(request.getParameter("pno"));
+		}
 		model.addAttribute("sungsuDao", Sdao);
 		model.addAttribute("appleDao", Adao);
 		model.addAttribute("taehoonDao", tdao);
